@@ -1,12 +1,13 @@
 import { __decorate, __metadata } from 'tslib';
 import { Platform, PlatformModule } from '@angular/cdk/platform';
 import { DOCUMENT, CommonModule } from '@angular/common';
-import { EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, Inject, NgZone, Renderer2, ViewChild, Input, Output, NgModule } from '@angular/core';
+import { EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, Inject, NgZone, Renderer2, ChangeDetectorRef, Optional, ViewChild, Input, Output, NgModule } from '@angular/core';
 import { NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { NzScrollService } from 'ng-zorro-antd/core/services';
 import { shallowEqual, getStyleAsText, InputNumber } from 'ng-zorro-antd/core/util';
 import { Subscription, ReplaySubject, Subject, merge, fromEvent } from 'rxjs';
 import { takeUntil, map, auditTime } from 'rxjs/operators';
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 
 /**
  * Use of this source code is governed by an MIT-style license that can be
@@ -48,14 +49,17 @@ const NZ_CONFIG_MODULE_NAME = 'affix';
 const NZ_AFFIX_CLS_PREFIX = 'ant-affix';
 const NZ_AFFIX_DEFAULT_SCROLL_TIME = 20;
 class NzAffixComponent {
-    constructor(el, doc, nzConfigService, scrollSrv, ngZone, platform, renderer) {
+    constructor(el, doc, nzConfigService, scrollSrv, ngZone, platform, renderer, cdr, directionality) {
         this.nzConfigService = nzConfigService;
         this.scrollSrv = scrollSrv;
         this.ngZone = ngZone;
         this.platform = platform;
         this.renderer = renderer;
+        this.cdr = cdr;
+        this.directionality = directionality;
         this._nzModuleName = NZ_CONFIG_MODULE_NAME;
         this.nzChange = new EventEmitter();
+        this.dir = 'ltr';
         this.positionChangeSubscription = Subscription.EMPTY;
         this.offsetChanged$ = new ReplaySubject(1);
         this.destroy$ = new Subject();
@@ -66,6 +70,16 @@ class NzAffixComponent {
     get target() {
         const el = this.nzTarget;
         return (typeof el === 'string' ? this.document.querySelector(el) : el) || window;
+    }
+    ngOnInit() {
+        var _a;
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.registerListeners();
+            this.updatePosition({});
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
     }
     ngOnChanges(changes) {
         const { nzOffsetBottom, nzOffsetTop, nzTarget } = changes;
@@ -134,6 +148,7 @@ class NzAffixComponent {
         else {
             wrapEl.classList.remove(NZ_AFFIX_CLS_PREFIX);
         }
+        this.updateRtlClass();
         if ((affixStyle && !originalAffixStyle) || (!affixStyle && originalAffixStyle)) {
             this.nzChange.emit(fixed);
         }
@@ -231,6 +246,20 @@ class NzAffixComponent {
             this.syncPlaceholderStyle(e);
         }
     }
+    updateRtlClass() {
+        const wrapEl = this.fixedEl.nativeElement;
+        if (this.dir === 'rtl') {
+            if (wrapEl.classList.contains(NZ_AFFIX_CLS_PREFIX)) {
+                wrapEl.classList.add(`${NZ_AFFIX_CLS_PREFIX}-rtl`);
+            }
+            else {
+                wrapEl.classList.remove(`${NZ_AFFIX_CLS_PREFIX}-rtl`);
+            }
+        }
+        else {
+            wrapEl.classList.remove(`${NZ_AFFIX_CLS_PREFIX}-rtl`);
+        }
+    }
 }
 NzAffixComponent.decorators = [
     { type: Component, args: [{
@@ -252,7 +281,9 @@ NzAffixComponent.ctorParameters = () => [
     { type: NzScrollService },
     { type: NgZone },
     { type: Platform },
-    { type: Renderer2 }
+    { type: Renderer2 },
+    { type: ChangeDetectorRef },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzAffixComponent.propDecorators = {
     fixedEl: [{ type: ViewChild, args: ['fixedEl', { static: true },] }],
@@ -282,7 +313,7 @@ NzAffixModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [NzAffixComponent],
                 exports: [NzAffixComponent],
-                imports: [CommonModule, PlatformModule]
+                imports: [BidiModule, CommonModule, PlatformModule]
             },] }
 ];
 

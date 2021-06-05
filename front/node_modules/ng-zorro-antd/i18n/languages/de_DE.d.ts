@@ -19,7 +19,14 @@ declare const _default: {
     DatePicker: {
         lang: {
             placeholder: string;
+            yearPlaceholder: string;
+            quarterPlaceholder: string;
+            monthPlaceholder: string;
+            weekPlaceholder: string;
             rangePlaceholder: string[];
+            rangeYearPlaceholder: string[];
+            rangeMonthPlaceholder: string[];
+            rangeWeekPlaceholder: string[];
             locale: string;
             today: string;
             now: string;
@@ -30,6 +37,7 @@ declare const _default: {
             year: string;
             timeSelect: string;
             dateSelect: string;
+            weekSelect: string;
             monthSelect: string;
             yearSelect: string;
             decadeSelect: string;
@@ -49,6 +57,7 @@ declare const _default: {
         };
         timePickerLocale: {
             placeholder: string;
+            rangePlaceholder: string[];
         };
     };
     TimePicker: {
@@ -57,7 +66,14 @@ declare const _default: {
     Calendar: {
         lang: {
             placeholder: string;
+            yearPlaceholder: string;
+            quarterPlaceholder: string;
+            monthPlaceholder: string;
+            weekPlaceholder: string;
             rangePlaceholder: string[];
+            rangeYearPlaceholder: string[];
+            rangeMonthPlaceholder: string[];
+            rangeWeekPlaceholder: string[];
             locale: string;
             today: string;
             now: string;
@@ -68,6 +84,7 @@ declare const _default: {
             year: string;
             timeSelect: string;
             dateSelect: string;
+            weekSelect: string;
             monthSelect: string;
             yearSelect: string;
             decadeSelect: string;
@@ -87,6 +104,7 @@ declare const _default: {
         };
         timePickerLocale: {
             placeholder: string;
+            rangePlaceholder: string[];
         };
     };
     global: {
@@ -96,6 +114,8 @@ declare const _default: {
         filterTitle: string;
         filterConfirm: string;
         filterReset: string;
+        filterEmptyText: string;
+        emptyText: string;
         selectAll: string;
         selectInvert: string;
         selectionAll: string;
@@ -116,9 +136,16 @@ declare const _default: {
         cancelText: string;
     };
     Transfer: {
+        titles: string[];
         searchPlaceholder: string;
         itemUnit: string;
         itemsUnit: string;
+        remove: string;
+        selectCurrent: string;
+        removeCurrent: string;
+        selectAll: string;
+        removeAll: string;
+        selectInvert: string;
     };
     Upload: {
         uploading: string;

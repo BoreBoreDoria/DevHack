@@ -10,7 +10,7 @@ export declare type CandyDateType = CandyDate | Date | null;
 export declare type SingleValue = CandyDate | null;
 export declare type CompatibleValue = SingleValue | SingleValue[];
 export declare function wrongSortOrder(rangeValue: SingleValue[]): boolean;
-export declare function normalizeRangeValue(value: SingleValue[], allowSameInTwoPanel: boolean, type?: NormalizedMode): CandyDate[];
+export declare function normalizeRangeValue(value: SingleValue[], hasTimePicker: boolean, type?: NormalizedMode, activePart?: 'left' | 'right'): CandyDate[];
 export declare function cloneDate(value: CompatibleValue): CompatibleValue;
 /**
  * Wrapping kind APIs for date operating and unify

@@ -2,12 +2,15 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
-import { OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Direction, Directionality } from '@angular/cdk/bidi';
+import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { NzConfigKey, NzConfigService } from 'ng-zorro-antd/core/config';
 import { NgStyleInterface, NumberInput } from 'ng-zorro-antd/core/types';
 import { NzProgressCirclePath, NzProgressFormatter, NzProgressGapPositionType, NzProgressStatusType, NzProgressStepItem, NzProgressStrokeColorType, NzProgressStrokeLinecapType, NzProgressTypeType } from './typings';
 export declare class NzProgressComponent implements OnChanges, OnInit, OnDestroy {
+    private cdr;
     nzConfigService: NzConfigService;
+    private directionality;
     readonly _nzModuleName: NzConfigKey;
     static ngAcceptInputType_nzSuccessPercent: NumberInput;
     static ngAcceptInputType_nzPercent: NumberInput;
@@ -49,6 +52,7 @@ export declare class NzProgressComponent implements OnChanges, OnInit, OnDestroy
     trailPathStyle: NgStyleInterface | null;
     pathString?: string;
     icon: string;
+    dir: Direction;
     trackByFn: (index: number) => string;
     get formatter(): NzProgressFormatter;
     get status(): NzProgressStatusType;
@@ -57,7 +61,7 @@ export declare class NzProgressComponent implements OnChanges, OnInit, OnDestroy
     private cachedStatus;
     private inferredStatus;
     private destroy$;
-    constructor(nzConfigService: NzConfigService);
+    constructor(cdr: ChangeDetectorRef, nzConfigService: NzConfigService, directionality: Directionality);
     ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
     ngOnDestroy(): void;

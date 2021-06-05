@@ -2,6 +2,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
+import { Direction } from '@angular/cdk/bidi';
 import { ChangeDetectorRef, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { BooleanInput, NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
@@ -21,6 +22,7 @@ export declare class NzSliderHandleComponent implements OnChanges {
     tooltipPlacement?: string;
     tooltipFormatter?: null | ((value: number) => string);
     active: boolean;
+    dir: Direction;
     tooltipTitle?: string;
     style: NgStyleInterface;
     constructor(sliderService: NzSliderService, cdr: ChangeDetectorRef);
@@ -32,4 +34,5 @@ export declare class NzSliderHandleComponent implements OnChanges {
     private updateTooltipTitle;
     private updateTooltipPosition;
     private updateStyle;
+    private getHorizontalStylePosition;
 }

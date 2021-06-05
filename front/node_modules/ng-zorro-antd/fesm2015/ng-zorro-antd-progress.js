@@ -1,5 +1,6 @@
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, Optional, Input, NgModule } from '@angular/core';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { __rest, __decorate, __metadata } from 'tslib';
@@ -62,8 +63,10 @@ const statusColorMap = new Map([
 const defaultFormatter = (p) => `${p}%`;
 const ɵ0 = defaultFormatter;
 class NzProgressComponent {
-    constructor(nzConfigService) {
+    constructor(cdr, nzConfigService, directionality) {
+        this.cdr = cdr;
         this.nzConfigService = nzConfigService;
+        this.directionality = directionality;
         this._nzModuleName = NZ_CONFIG_MODULE_NAME;
         this.nzShowInfo = true;
         this.nzWidth = 132;
@@ -91,6 +94,7 @@ class NzProgressComponent {
         /** Paths to rendered in the template. */
         this.progressCirclePath = [];
         this.trailPathStyle = null;
+        this.dir = 'ltr';
         this.trackByFn = (index) => `${index}`;
         this.cachedStatus = 'normal';
         this.inferredStatus = 'normal';
@@ -141,6 +145,7 @@ class NzProgressComponent {
         }
     }
     ngOnInit() {
+        var _a;
         this.nzConfigService
             .getConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME)
             .pipe(takeUntil(this.destroy$))
@@ -149,6 +154,11 @@ class NzProgressComponent {
             this.setStrokeColor();
             this.getCirclePaths();
         });
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
     }
     ngOnDestroy() {
         this.destroy$.next();
@@ -282,6 +292,7 @@ NzProgressComponent.decorators = [
       [class.ant-progress-show-info]="nzShowInfo"
       [class.ant-progress-circle]="isCircleStyle"
       [class.ant-progress-steps]="isSteps"
+      [class.ant-progress-rtl]="dir === 'rtl'"
     >
       <!-- line progress -->
       <div *ngIf="nzType === 'line'">
@@ -356,7 +367,9 @@ NzProgressComponent.decorators = [
             },] }
 ];
 NzProgressComponent.ctorParameters = () => [
-    { type: NzConfigService }
+    { type: ChangeDetectorRef },
+    { type: NzConfigService },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzProgressComponent.propDecorators = {
     nzShowInfo: [{ type: Input }],
@@ -427,7 +440,7 @@ NzProgressModule.decorators = [
     { type: NgModule, args: [{
                 exports: [NzProgressComponent],
                 declarations: [NzProgressComponent],
-                imports: [CommonModule, NzIconModule, NzOutletModule]
+                imports: [BidiModule, CommonModule, NzIconModule, NzOutletModule]
             },] }
 ];
 

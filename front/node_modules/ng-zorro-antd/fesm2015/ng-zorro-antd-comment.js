@@ -1,7 +1,10 @@
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { CommonModule } from '@angular/common';
-import { Directive, ComponentFactoryResolver, ViewContainerRef, Input, Component, ViewEncapsulation, ChangeDetectionStrategy, ViewChild, TemplateRef, ContentChildren, NgModule } from '@angular/core';
+import { Directive, ComponentFactoryResolver, ViewContainerRef, Input, Component, ViewEncapsulation, ChangeDetectionStrategy, ViewChild, TemplateRef, ChangeDetectorRef, Optional, ContentChildren, NgModule } from '@angular/core';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { CdkPortalOutlet, TemplatePortal } from '@angular/cdk/portal';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * Use of this source code is governed by an MIT-style license that can be
@@ -84,7 +87,24 @@ NzCommentActionComponent.propDecorators = {
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 class NzCommentComponent {
-    constructor() { }
+    constructor(cdr, directionality) {
+        this.cdr = cdr;
+        this.directionality = directionality;
+        this.dir = 'ltr';
+        this.destroy$ = new Subject();
+    }
+    ngOnInit() {
+        var _a;
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
+    }
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 }
 NzCommentComponent.decorators = [
     { type: Component, args: [{
@@ -119,11 +139,15 @@ NzCommentComponent.decorators = [
                 encapsulation: ViewEncapsulation.None,
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 host: {
-                    class: 'ant-comment'
+                    '[class.ant-comment]': `true`,
+                    '[class.ant-comment-rtl]': `dir === "rtl"`
                 }
             },] }
 ];
-NzCommentComponent.ctorParameters = () => [];
+NzCommentComponent.ctorParameters = () => [
+    { type: ChangeDetectorRef },
+    { type: Directionality, decorators: [{ type: Optional }] }
+];
 NzCommentComponent.propDecorators = {
     nzAuthor: [{ type: Input }],
     nzDatetime: [{ type: Input }],
@@ -139,7 +163,7 @@ class NzCommentModule {
 }
 NzCommentModule.decorators = [
     { type: NgModule, args: [{
-                imports: [CommonModule, NzOutletModule],
+                imports: [BidiModule, CommonModule, NzOutletModule],
                 exports: [NzCommentComponent, ...NZ_COMMENT_CELLS],
                 declarations: [NzCommentComponent, ...NZ_COMMENT_CELLS]
             },] }

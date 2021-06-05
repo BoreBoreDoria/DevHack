@@ -4,9 +4,9 @@
  */
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, EventEmitter, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Directionality } from '@angular/cdk/bidi';
 import { NzStatisticComponent } from './statistic.component';
 export declare class NzCountdownComponent extends NzStatisticComponent implements OnInit, OnChanges, OnDestroy {
-    private cdr;
     private ngZone;
     private platform;
     nzFormat: string;
@@ -14,7 +14,7 @@ export declare class NzCountdownComponent extends NzStatisticComponent implement
     diff: number;
     private target;
     private updater_?;
-    constructor(cdr: ChangeDetectorRef, ngZone: NgZone, platform: Platform);
+    constructor(cdr: ChangeDetectorRef, ngZone: NgZone, platform: Platform, directionality: Directionality);
     ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
     ngOnDestroy(): void;

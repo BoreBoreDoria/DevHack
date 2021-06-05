@@ -11,8 +11,11 @@ export declare class NzSliderStepComponent implements OnChanges {
     lowerBound: number | null;
     upperBound: number | null;
     marksArray: NzExtendedMark[];
+    min: number;
+    max: number;
     vertical: boolean;
     included: boolean;
+    reverse: boolean;
     steps: NzDisplayedStep[];
     ngOnChanges(changes: SimpleChanges): void;
     trackById(_index: number, step: NzDisplayedStep): number;

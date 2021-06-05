@@ -9,7 +9,7 @@ export declare function getValueWithConfig<T>(userValue: T | undefined, configVa
 /**
  * Assign the params into the content component instance.
  * @deprecated Should use dependency injection to get the params for user
- * @breaking-change 11.0.0
+ * @breaking-change 12.0.0
  */
 export declare function setContentInstanceParams<T>(instance: T, params: Partial<T> | undefined): void;
 export declare function getConfigFromComponent(component: NzModalComponent): ModalOptions;

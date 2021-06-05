@@ -13,6 +13,11 @@
         right: 150px;
       }
 
+      :host ::ng-deep .long-div .ant-back-top-rtl {
+        right: unset;
+        left: 150px;
+      }
+
       :host ::ng-deep strong {
         color: rgba(64, 64, 64, 0.6);
       }

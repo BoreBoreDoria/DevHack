@@ -8,6 +8,7 @@ export declare type NzTableData = NzSafeAny | {
 };
 export declare type NzTableLayout = 'fixed' | 'auto';
 export declare type NzTablePaginationPosition = 'top' | 'bottom' | 'both';
+export declare type NzTablePaginationType = 'default' | 'small';
 export declare type NzTableSize = 'middle' | 'default' | 'small';
 export declare type NzTableFilterList = Array<{
     text: string;

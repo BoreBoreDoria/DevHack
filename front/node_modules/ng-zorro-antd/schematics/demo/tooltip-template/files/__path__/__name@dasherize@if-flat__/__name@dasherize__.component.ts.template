@@ -4,7 +4,16 @@ import { Component } from '@angular/core';
   selector: '<%= selector %>',
   <% if(inlineTemplate) { %>template: `
     <a nz-tooltip [nzTooltipTitle]="titleTemplate">This Tooltip has an Icon</a>
-    <ng-template #titleTemplate> <i nz-icon nzType="file" style="margin-right: 8px"></i> <span>Tooltip With Icon</span> </ng-template>
-  `<% } else { %>templateUrl: './<%= dasherize(name) %>.component.html'<% } %>
+    <ng-template #titleTemplate>
+      <i nz-icon nzType="file"></i>
+      <span>Tooltip With Icon</span>
+    </ng-template>
+  `<% } else { %>templateUrl: './<%= dasherize(name) %>.component.html'<% } %>,
+  <% if(inlineStyle) { %>styles: [`
+      .anticon {
+        margin-right: 8px;
+        margin-left: 8px;
+      }
+    `]<% } else { %>styleUrls: ['./<%= dasherize(name) %>.component.<%= style %>']<% } %>
 })
 export class <%= classify(name) %>Component {}

@@ -1,6 +1,8 @@
 import { Platform, PlatformModule } from '@angular/cdk/platform';
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input, EventEmitter, ChangeDetectorRef, NgZone, Output, Inject, LOCALE_ID, NgModule } from '@angular/core';
-import { interval } from 'rxjs';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, Optional, Input, EventEmitter, NgZone, Output, Inject, LOCALE_ID, NgModule } from '@angular/core';
+import { Subject, interval } from 'rxjs';
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
+import { takeUntil } from 'rxjs/operators';
 import { getLocaleNumberSymbol, NumberSymbol, CommonModule } from '@angular/common';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzPipesModule } from 'ng-zorro-antd/core/pipe';
@@ -10,8 +12,24 @@ import { NzPipesModule } from 'ng-zorro-antd/core/pipe';
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 class NzStatisticComponent {
-    constructor() {
+    constructor(cdr, directionality) {
+        this.cdr = cdr;
+        this.directionality = directionality;
         this.nzValueStyle = {};
+        this.dir = 'ltr';
+        this.destroy$ = new Subject();
+    }
+    ngOnInit() {
+        var _a;
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
+    }
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }
 NzStatisticComponent.decorators = [
@@ -21,7 +39,7 @@ NzStatisticComponent.decorators = [
                 selector: 'nz-statistic',
                 exportAs: 'nzStatistic',
                 template: `
-    <div class="ant-statistic">
+    <div class="ant-statistic" [class.ant-statistic-rtl]="dir === 'rtl'">
       <div class="ant-statistic-title">
         <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
       </div>
@@ -29,7 +47,7 @@ NzStatisticComponent.decorators = [
         <span *ngIf="nzPrefix" class="ant-statistic-content-prefix">
           <ng-container *nzStringTemplateOutlet="nzPrefix">{{ nzPrefix }}</ng-container>
         </span>
-        <nz-statistic-number [nzValue]="nzValue" [nzValueTemplate]="nzValueTemplate"> </nz-statistic-number>
+        <nz-statistic-number [nzValue]="nzValue" [nzValueTemplate]="nzValueTemplate"></nz-statistic-number>
         <span *ngIf="nzSuffix" class="ant-statistic-content-suffix">
           <ng-container *nzStringTemplateOutlet="nzSuffix">{{ nzSuffix }}</ng-container>
         </span>
@@ -37,6 +55,10 @@ NzStatisticComponent.decorators = [
     </div>
   `
             },] }
+];
+NzStatisticComponent.ctorParameters = () => [
+    { type: ChangeDetectorRef },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzStatisticComponent.propDecorators = {
     nzPrefix: [{ type: Input }],
@@ -53,9 +75,8 @@ NzStatisticComponent.propDecorators = {
  */
 const REFRESH_INTERVAL = 1000 / 30;
 class NzCountdownComponent extends NzStatisticComponent {
-    constructor(cdr, ngZone, platform) {
-        super();
-        this.cdr = cdr;
+    constructor(cdr, ngZone, platform, directionality) {
+        super(cdr, directionality);
         this.ngZone = ngZone;
         this.platform = platform;
         this.nzFormat = 'HH:mm:ss';
@@ -71,6 +92,7 @@ class NzCountdownComponent extends NzStatisticComponent {
         }
     }
     ngOnInit() {
+        super.ngOnInit();
         this.syncTimer();
     }
     ngOnDestroy() {
@@ -126,8 +148,7 @@ NzCountdownComponent.decorators = [
       [nzTitle]="nzTitle"
       [nzPrefix]="nzPrefix"
       [nzSuffix]="nzSuffix"
-    >
-    </nz-statistic>
+    ></nz-statistic>
 
     <ng-template #countDownTpl>{{ diff | nzTimeRange: nzFormat }}</ng-template>
   `
@@ -136,7 +157,8 @@ NzCountdownComponent.decorators = [
 NzCountdownComponent.ctorParameters = () => [
     { type: ChangeDetectorRef },
     { type: NgZone },
-    { type: Platform }
+    { type: Platform },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzCountdownComponent.propDecorators = {
     nzFormat: [{ type: Input }],
@@ -199,7 +221,7 @@ class NzStatisticModule {
 }
 NzStatisticModule.decorators = [
     { type: NgModule, args: [{
-                imports: [CommonModule, PlatformModule, NzOutletModule, NzPipesModule],
+                imports: [BidiModule, CommonModule, PlatformModule, NzOutletModule, NzPipesModule],
                 declarations: [NzStatisticComponent, NzCountdownComponent, NzStatisticNumberComponent],
                 exports: [NzStatisticComponent, NzCountdownComponent, NzStatisticNumberComponent]
             },] }

@@ -1,13 +1,14 @@
 import { __decorate, __metadata } from 'tslib';
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { Platform, PlatformModule } from '@angular/cdk/platform';
 import { DOCUMENT, CommonModule } from '@angular/common';
-import { EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, Inject, ChangeDetectorRef, NgZone, Input, Output, NgModule } from '@angular/core';
+import { EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, Inject, ChangeDetectorRef, NgZone, Optional, Input, Output, NgModule } from '@angular/core';
 import { fadeMotion } from 'ng-zorro-antd/core/animation';
 import { NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { NzScrollService } from 'ng-zorro-antd/core/services';
 import { InputNumber } from 'ng-zorro-antd/core/util';
 import { Subject, fromEvent } from 'rxjs';
-import { throttleTime, takeUntil } from 'rxjs/operators';
+import { takeUntil, throttleTime } from 'rxjs/operators';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 /**
@@ -16,23 +17,34 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
  */
 const NZ_CONFIG_MODULE_NAME = 'backTop';
 class NzBackTopComponent {
-    constructor(doc, nzConfigService, scrollSrv, platform, cd, zone) {
+    constructor(doc, nzConfigService, scrollSrv, platform, cd, zone, cdr, directionality) {
         this.doc = doc;
         this.nzConfigService = nzConfigService;
         this.scrollSrv = scrollSrv;
         this.platform = platform;
         this.cd = cd;
         this.zone = zone;
+        this.cdr = cdr;
+        this.directionality = directionality;
         this._nzModuleName = NZ_CONFIG_MODULE_NAME;
         this.scrollListenerDestroy$ = new Subject();
+        this.destroy$ = new Subject();
         this.target = null;
         this.visible = false;
+        this.dir = 'ltr';
         this.nzVisibilityHeight = 400;
         this.nzDuration = 450;
         this.nzClick = new EventEmitter();
+        this.dir = this.directionality.value;
     }
     ngOnInit() {
+        var _a;
         this.registerScrollEvent();
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
     }
     clickBackTop() {
         this.scrollSrv.scrollTo(this.getTarget(), 0, { duration: this.nzDuration });
@@ -63,6 +75,8 @@ class NzBackTopComponent {
     ngOnDestroy() {
         this.scrollListenerDestroy$.next();
         this.scrollListenerDestroy$.complete();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
     ngOnChanges(changes) {
         const { nzTarget } = changes;
@@ -78,7 +92,7 @@ NzBackTopComponent.decorators = [
                 exportAs: 'nzBackTop',
                 animations: [fadeMotion],
                 template: `
-    <div class="ant-back-top" (click)="clickBackTop()" @fadeMotion *ngIf="visible">
+    <div class="ant-back-top" [class.ant-back-top-rtl]="dir === 'rtl'" (click)="clickBackTop()" @fadeMotion *ngIf="visible">
       <ng-template #defaultContent>
         <div class="ant-back-top-content">
           <div class="ant-back-top-icon">
@@ -100,7 +114,9 @@ NzBackTopComponent.ctorParameters = () => [
     { type: NzScrollService },
     { type: Platform },
     { type: ChangeDetectorRef },
-    { type: NgZone }
+    { type: NgZone },
+    { type: ChangeDetectorRef },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzBackTopComponent.propDecorators = {
     nzTemplate: [{ type: Input }],
@@ -129,7 +145,7 @@ NzBackTopModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [NzBackTopComponent],
                 exports: [NzBackTopComponent],
-                imports: [CommonModule, PlatformModule, NzIconModule]
+                imports: [BidiModule, CommonModule, PlatformModule, NzIconModule]
             },] }
 ];
 

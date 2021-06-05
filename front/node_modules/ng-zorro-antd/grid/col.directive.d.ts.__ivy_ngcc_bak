@@ -2,6 +2,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { AfterViewInit, ElementRef, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
 import { NzRowDirective } from './row.directive';
 export interface EmbeddedProperty {
@@ -15,9 +16,11 @@ export declare class NzColDirective implements OnInit, OnChanges, AfterViewInit,
     private elementRef;
     nzRowDirective: NzRowDirective;
     renderer: Renderer2;
+    private directionality;
     private classMap;
     private destroy$;
     hostFlexStyle: string | null;
+    dir: Direction;
     nzFlex: string | number | null;
     nzSpan: string | number | null;
     nzOrder: string | number | null;
@@ -34,7 +37,7 @@ export declare class NzColDirective implements OnInit, OnChanges, AfterViewInit,
     setHostFlexStyle(): void;
     parseFlex(flex: number | string | null): string | null;
     generateClass(): object;
-    constructor(elementRef: ElementRef, nzRowDirective: NzRowDirective, renderer: Renderer2);
+    constructor(elementRef: ElementRef, nzRowDirective: NzRowDirective, renderer: Renderer2, directionality: Directionality);
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
     ngAfterViewInit(): void;

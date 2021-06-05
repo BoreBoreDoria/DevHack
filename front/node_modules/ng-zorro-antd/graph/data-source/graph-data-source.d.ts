@@ -26,4 +26,6 @@ export declare class NzGraphData implements NzGraphBaseSource<NzGraphDataDef, st
     constructor(source?: NzGraphDataDef);
     connect(): Observable<NzGraphDataDef>;
     disconnect(): void;
+    private findParents;
+    private findChildren;
 }

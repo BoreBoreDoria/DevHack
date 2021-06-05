@@ -3,6 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 import { FocusMonitor } from '@angular/cdk/a11y';
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { ChangeDetectorRef, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { BooleanInput, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
@@ -16,14 +17,17 @@ export declare class NzCheckboxGroupComponent implements ControlValueAccessor, O
     private elementRef;
     private focusMonitor;
     private cdr;
+    private directionality;
     static ngAcceptInputType_nzDisabled: BooleanInput;
     onChange: OnChangeType;
     onTouched: OnTouchedType;
     options: NzCheckBoxOptionInterface[];
     nzDisabled: boolean;
+    dir: Direction;
+    private destroy$;
     trackByOption(_: number, option: NzCheckBoxOptionInterface): string;
     onCheckedChange(option: NzCheckBoxOptionInterface, checked: boolean): void;
-    constructor(elementRef: ElementRef, focusMonitor: FocusMonitor, cdr: ChangeDetectorRef);
+    constructor(elementRef: ElementRef, focusMonitor: FocusMonitor, cdr: ChangeDetectorRef, directionality: Directionality);
     ngOnInit(): void;
     ngOnDestroy(): void;
     writeValue(value: NzCheckBoxOptionInterface[]): void;

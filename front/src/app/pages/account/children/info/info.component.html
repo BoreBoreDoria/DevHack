@@ -1,0 +1,57 @@
+<div class="info">
+  <div class="info__logout">
+    <div class="info__logout_icon">
+<!--      TODO make component -->
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15.4857 20H19.4857C20.5903 20 21.4857 19.1046 21.4857 18V6C21.4857 4.89543 20.5903 4 19.4857 4H15.4857V6H19.4857V18H15.4857V20Z"
+          fill="currentColor"
+        />
+        <path
+          d="M10.1582 17.385L8.73801 15.9768L12.6572 12.0242L3.51428 12.0242C2.96199 12.0242 2.51428 11.5765 2.51428 11.0242C2.51429 10.4719 2.962 10.0242 3.51429 10.0242L12.6765 10.0242L8.69599 6.0774L10.1042 4.6572L16.4951 10.9941L10.1582 17.385Z"
+          fill="currentColor"
+        />
+      </svg>
+    </div>
+  </div>
+
+  <div class="info__tabs vr-6__mb">
+    <h3 *ngFor="let tab of tabs" class="info__tabs_tab"
+         [class.info__tabs_tab--active]="activeTab === tab"
+        (click)="activeTab = tab"
+    >{{ tab }}</h3>
+  </div>
+
+  <div class="info__user">
+    <div class="info_avatar vr-4__mb">
+      <nz-avatar [nzSize]="128" nzIcon="user"
+                 [nzSrc]="'https://aiva.group/wp-content/uploads/2018/11/team_6.jpg'"
+      ></nz-avatar>
+    </div>
+    <div class="info__name">
+      <label class="info__name_label">Name</label>
+      <h2 class="info__name_heading">
+        Mikhail Kucherov
+      </h2>
+    </div>
+
+    <div class="info__name">
+      <label class="info__name_label">Balance</label>
+      <h2 class="info__name_heading">
+        1000$
+      </h2>
+    </div>
+  </div>
+
+  <div class="info__flows">
+    <app-flow-card class="info__flows_card"></app-flow-card>
+    <app-flow-card class="info__flows_card"></app-flow-card>
+    <app-flow-card class="info__flows_card"></app-flow-card>
+  </div>
+</div>

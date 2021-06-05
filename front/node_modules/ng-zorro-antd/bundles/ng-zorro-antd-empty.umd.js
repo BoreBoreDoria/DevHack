@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/cdk/portal'), require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('ng-zorro-antd/core/config'), require('ng-zorro-antd/i18n'), require('@angular/common'), require('ng-zorro-antd/core/outlet')) :
-  typeof define === 'function' && define.amd ? define('ng-zorro-antd/empty', ['exports', '@angular/cdk/portal', '@angular/core', 'rxjs', 'rxjs/operators', 'ng-zorro-antd/core/config', 'ng-zorro-antd/i18n', '@angular/common', 'ng-zorro-antd/core/outlet'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global['ng-zorro-antd'] = global['ng-zorro-antd'] || {}, global['ng-zorro-antd'].empty = {}), global.ng.cdk.portal, global.ng.core, global.rxjs, global.rxjs.operators, global['ng-zorro-antd'].core.config, global['ng-zorro-antd'].i18n, global.ng.common, global['ng-zorro-antd'].core.outlet));
-}(this, (function (exports, portal, core, rxjs, operators, config, i18n, common, outlet) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/cdk/portal'), require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('ng-zorro-antd/core/config'), require('ng-zorro-antd/i18n'), require('@angular/cdk/bidi'), require('@angular/common'), require('ng-zorro-antd/core/outlet')) :
+  typeof define === 'function' && define.amd ? define('ng-zorro-antd/empty', ['exports', '@angular/cdk/portal', '@angular/core', 'rxjs', 'rxjs/operators', 'ng-zorro-antd/core/config', 'ng-zorro-antd/i18n', '@angular/cdk/bidi', '@angular/common', 'ng-zorro-antd/core/outlet'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global['ng-zorro-antd'] = global['ng-zorro-antd'] || {}, global['ng-zorro-antd'].empty = {}), global.ng.cdk.portal, global.ng.core, global.rxjs, global.rxjs.operators, global['ng-zorro-antd'].core.config, global['ng-zorro-antd'].i18n, global.ng.cdk.bidi, global.ng.common, global['ng-zorro-antd'].core.outlet));
+}(this, (function (exports, portal, core, rxjs, operators, config, i18n, bidi, common, outlet) { 'use strict';
 
   /**
    * Use of this source code is governed by an MIT-style license that can be
@@ -222,7 +222,7 @@
   }());
   NzEmptyModule.decorators = [
       { type: core.NgModule, args: [{
-                  imports: [common.CommonModule, portal.PortalModule, outlet.NzOutletModule, i18n.NzI18nModule],
+                  imports: [bidi.BidiModule, common.CommonModule, portal.PortalModule, outlet.NzOutletModule, i18n.NzI18nModule],
                   declarations: [NzEmptyComponent, NzEmbedEmptyComponent, NzEmptyDefaultComponent, NzEmptySimpleComponent],
                   exports: [NzEmptyComponent, NzEmbedEmptyComponent]
               },] }

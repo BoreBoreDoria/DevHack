@@ -1,15 +1,24 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerLocale = void 0;
 const schematics_1 = require("@angular/cdk/schematics");
 const change_1 = require("@schematics/angular/utility/change");
-const config_1 = require("@schematics/angular/utility/config");
 const ng_ast_utils_1 = require("@schematics/angular/utility/ng-ast-utils");
+const workspace_1 = require("@schematics/angular/utility/workspace");
 const chalk_1 = require("chalk");
 const ts = require("typescript");
 function registerLocale(options) {
-    return (host) => {
-        const workspace = config_1.getWorkspace(host);
+    return (host) => __awaiter(this, void 0, void 0, function* () {
+        const workspace = yield workspace_1.getWorkspace(host);
         const project = schematics_1.getProjectFromWorkspace(workspace, options.project);
         const appModulePath = ng_ast_utils_1.getAppModulePath(host, schematics_1.getProjectMainFile(project));
         const moduleSource = schematics_1.parseSourceFile(host, appModulePath);
@@ -30,8 +39,8 @@ function registerLocale(options) {
             }
         });
         host.commitUpdate(recorder);
-        return host;
-    };
+        return;
+    });
 }
 exports.registerLocale = registerLocale;
 function registerLocaleData(moduleSource, modulePath, locale) {
@@ -47,10 +56,10 @@ function registerLocaleData(moduleSource, modulePath, locale) {
     }
     else {
         console.log();
-        console.log(chalk_1.default.yellow(`Could not add the registerLocaleData to your app.module file (${chalk_1.default.blue(modulePath)}).` +
+        console.log(chalk_1.yellow(`Could not add the registerLocaleData to your app.module file (${chalk_1.blue(modulePath)}).` +
             `because there is already a registerLocaleData function.`));
-        console.log(chalk_1.default.yellow(`Please manually add the following code to your app.module:`));
-        console.log(chalk_1.default.cyan(`registerLocaleData(${locale});`));
+        console.log(chalk_1.yellow(`Please manually add the following code to your app.module:`));
+        console.log(chalk_1.cyan(`registerLocaleData(${locale});`));
         return new change_1.NoopChange();
     }
 }
@@ -93,10 +102,10 @@ function insertI18nTokenProvide(moduleSource, modulePath, locale) {
             }
             else {
                 console.log();
-                console.log(chalk_1.default.yellow(`Could not provide the locale token to your app.module file (${chalk_1.default.blue(modulePath)}).` +
+                console.log(chalk_1.yellow(`Could not provide the locale token to your app.module file (${chalk_1.blue(modulePath)}).` +
                     `because there is already a locale token in provides.`));
-                console.log(chalk_1.default.yellow(`Please manually add the following code to your provides:`));
-                console.log(chalk_1.default.cyan(`{ provide: NZ_I18N, useValue: ${locale} }`));
+                console.log(chalk_1.yellow(`Please manually add the following code to your provides:`));
+                console.log(chalk_1.cyan(`{ provide: NZ_I18N, useValue: ${locale} }`));
                 return [];
             }
         }

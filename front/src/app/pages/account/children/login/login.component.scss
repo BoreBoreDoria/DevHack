@@ -1,0 +1,19 @@
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 60vh;
+
+  &_wrapper {
+    max-width: 300px;
+  }
+
+  &_forgot {
+    float: right;
+  }
+
+  &_button {
+    width: 100%;
+  }
+}

@@ -3,6 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 import { FocusMonitor } from '@angular/cdk/a11y';
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { BooleanInput, NzSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
@@ -12,10 +13,13 @@ export declare class NzCheckboxComponent implements OnInit, ControlValueAccessor
     private nzCheckboxWrapperComponent;
     private cdr;
     private focusMonitor;
+    private directionality;
     static ngAcceptInputType_nzAutoFocus: BooleanInput;
     static ngAcceptInputType_nzDisabled: BooleanInput;
     static ngAcceptInputType_nzIndeterminate: BooleanInput;
     static ngAcceptInputType_nzChecked: BooleanInput;
+    dir: Direction;
+    private destroy$;
     onChange: OnChangeType;
     onTouched: OnTouchedType;
     private inputElement;
@@ -33,7 +37,7 @@ export declare class NzCheckboxComponent implements OnInit, ControlValueAccessor
     setDisabledState(disabled: boolean): void;
     focus(): void;
     blur(): void;
-    constructor(elementRef: ElementRef<HTMLElement>, nzCheckboxWrapperComponent: NzCheckboxWrapperComponent, cdr: ChangeDetectorRef, focusMonitor: FocusMonitor);
+    constructor(elementRef: ElementRef<HTMLElement>, nzCheckboxWrapperComponent: NzCheckboxWrapperComponent, cdr: ChangeDetectorRef, focusMonitor: FocusMonitor, directionality: Directionality);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;

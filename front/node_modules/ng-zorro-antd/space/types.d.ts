@@ -4,4 +4,5 @@
  */
 export declare type NzSpaceDirection = 'vertical' | 'horizontal';
 export declare type NzSpaceAlign = 'start' | 'end' | 'center' | 'baseline';
-export declare type NzSpaceSize = 'small' | 'middle' | 'large';
+export declare type NzSpaceType = 'small' | 'middle' | 'large';
+export declare type NzSpaceSize = NzSpaceType | number;

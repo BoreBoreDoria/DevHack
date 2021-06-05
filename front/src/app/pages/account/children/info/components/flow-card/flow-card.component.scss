@@ -1,0 +1,26 @@
+@import "src/assets/styles/vars.scss";
+
+.flow-card {
+  position: relative;
+  height: 164px;
+
+  padding: 24px;
+
+  border-radius: 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
+  &_subtitle {
+    color: $black-60;
+  }
+
+  &_title {
+    //
+  }
+
+  &_icon {
+    position: absolute;
+
+    bottom: 24px;
+    right: 24px;
+  }
+}

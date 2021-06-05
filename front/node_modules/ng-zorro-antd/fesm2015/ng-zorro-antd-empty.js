@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { startWith, takeUntil } from 'rxjs/operators';
 import { NzConfigService } from 'ng-zorro-antd/core/config';
 import { NzI18nService, NzI18nModule } from 'ng-zorro-antd/i18n';
+import { BidiModule } from '@angular/cdk/bidi';
 import { CommonModule } from '@angular/common';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 
@@ -290,7 +291,7 @@ class NzEmptyModule {
 }
 NzEmptyModule.decorators = [
     { type: NgModule, args: [{
-                imports: [CommonModule, PortalModule, NzOutletModule, NzI18nModule],
+                imports: [BidiModule, CommonModule, PortalModule, NzOutletModule, NzI18nModule],
                 declarations: [NzEmptyComponent, NzEmbedEmptyComponent, NzEmptyDefaultComponent, NzEmptySimpleComponent],
                 exports: [NzEmptyComponent, NzEmbedEmptyComponent]
             },] }

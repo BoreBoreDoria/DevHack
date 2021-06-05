@@ -19,9 +19,9 @@
 
     <button nz-button nzType="primary" (click)="showModalMiddle()">Vertically centered modal dialog</button>
     <nz-modal
-      nzWrapClassName="vertical-center-modal"
       [(nzVisible)]="isVisibleMiddle"
       nzTitle="Vertically centered modal dialog"
+      nzCentered
       (nzOnCancel)="handleCancelMiddle()"
       (nzOnOk)="handleOkMiddle()"
     >

@@ -50,15 +50,21 @@ describe('side-menu schematic', () => {
     }));
     it('should fall back to the @schematics/angular:component option value', () => __awaiter(void 0, void 0, void 0, function* () {
         appTree = yield test_app_1.createTestApp(runner, { style: schema_1.Style.Less });
-        yield runner.runSchematicAsync('ng-add', { template: 'sidemenu' }, appTree).toPromise();
-        // tslint:disable-next-line:no-any
-        const sideMenuSchematic = runner.tasks.find(task => task.name === 'run-schematic' && task.options.name && task.options.name === 'sidemenu');
-        expect(sideMenuSchematic).toBeDefined();
-        // tslint:disable-next-line:no-any
-        const sideMenuSchematicOption = sideMenuSchematic.options.options;
-        expect(sideMenuSchematicOption).toBeDefined();
-        expect(sideMenuSchematicOption.template).toBe('sidemenu');
-        expect(sideMenuSchematicOption.style).toBe(schema_1.Style.Less);
+        const tree = yield runner.runSchematicAsync('ng-add', { template: 'sidemenu' }, appTree).toPromise();
+        expect(tree.files).toEqual(jasmine.arrayContaining([
+            '/projects/ng-zorro/src/app/app.component.less',
+            '/projects/ng-zorro/src/app/pages/welcome/welcome.component.less'
+        ]));
+    }));
+    it('should fall back to the @schematics/angular:component option value', () => __awaiter(void 0, void 0, void 0, function* () {
+        appTree = yield test_app_1.createTestApp(runner, { inlineStyle: true });
+        const tree = yield runner.runSchematicAsync('ng-add', { template: 'sidemenu' }, appTree).toPromise();
+        expect(tree.files).not.toEqual('/projects/ng-zorro/src/app/pages/welcome/welcome.component.css');
+    }));
+    it('should fall back to the @schematics/angular:component option value', () => __awaiter(void 0, void 0, void 0, function* () {
+        appTree = yield test_app_1.createTestApp(runner, { inlineTemplate: true });
+        const tree = yield runner.runSchematicAsync('ng-add', { template: 'sidemenu' }, appTree).toPromise();
+        expect(tree.files).not.toEqual('/projects/ng-zorro/src/app/pages/welcome/welcome.component.html');
     }));
     it('should set the prefix correctly', () => __awaiter(void 0, void 0, void 0, function* () {
         const tree = yield runner.runSchematicAsync('sidemenu', { prefix: 'nz' }, appTree).toPromise();

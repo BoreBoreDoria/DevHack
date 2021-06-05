@@ -2,11 +2,13 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
+import { Direction } from '@angular/cdk/bidi';
 import { ChangeDetectorRef } from '@angular/core';
 import { NotificationConfig, NzConfigService } from 'ng-zorro-antd/core/config';
 import { NzMNContainerComponent } from 'ng-zorro-antd/message';
 import { NzNotificationData, NzNotificationDataOptions } from './typings';
 export declare class NzNotificationContainerComponent extends NzMNContainerComponent {
+    dir: Direction;
     bottom?: string | null;
     top?: string | null;
     config: Required<NotificationConfig>;

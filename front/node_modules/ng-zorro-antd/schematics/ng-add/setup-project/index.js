@@ -9,9 +9,9 @@ const register_locale_1 = require("./register-locale");
 const theming_1 = require("./theming");
 function default_1(options) {
     return schematics_1.chain([
+        register_locale_1.registerLocale(options),
         add_required_modules_1.addRequiredModules(options),
         add_animations_module_1.addAnimationsModule(options),
-        register_locale_1.registerLocale(options),
         theming_1.addThemeToAppStyles(options),
         options.dynamicIcon ? add_icon_assets_1.addIconToAssets(options) : schematics_1.noop(),
         options.gestures ? hammerjs_import_1.hammerjsImport(options) : schematics_1.noop()

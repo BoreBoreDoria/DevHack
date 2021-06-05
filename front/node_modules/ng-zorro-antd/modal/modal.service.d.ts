@@ -2,6 +2,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
+import { Directionality } from '@angular/cdk/bidi';
 import { Overlay } from '@angular/cdk/overlay';
 import { Injector, OnDestroy } from '@angular/core';
 import { NzConfigService } from 'ng-zorro-antd/core/config';
@@ -14,12 +15,13 @@ export declare class NzModalService implements OnDestroy {
     private injector;
     private nzConfigService;
     private parentModal;
+    private directionality;
     private openModalsAtThisLevel;
     private readonly afterAllClosedAtThisLevel;
     get openModals(): NzModalRef[];
     get _afterAllClosed(): Subject<void>;
     readonly afterAllClose: Observable<void>;
-    constructor(overlay: Overlay, injector: Injector, nzConfigService: NzConfigService, parentModal: NzModalService);
+    constructor(overlay: Overlay, injector: Injector, nzConfigService: NzConfigService, parentModal: NzModalService, directionality: Directionality);
     create<T, R = NzSafeAny>(config: ModalOptions<T, R>): NzModalRef<T, R>;
     closeAll(): void;
     confirm<T>(options?: ModalOptions<T>, confirmType?: ConfirmType): NzModalRef<T>;

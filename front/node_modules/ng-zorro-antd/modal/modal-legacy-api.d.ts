@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 export declare abstract class NzModalLegacyAPI<T, R> {
     abstract afterOpen: Observable<void>;
     abstract afterClose: Observable<R>;
-    abstract open(): void;
     abstract close(result?: R): void;
     abstract destroy(result?: R): void;
     /**

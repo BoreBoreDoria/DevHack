@@ -3,6 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 import { FocusMonitor } from '@angular/cdk/a11y';
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { BooleanInput, NzSizeLDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
@@ -10,15 +11,18 @@ export declare class NzInputNumberComponent implements ControlValueAccessor, Aft
     private elementRef;
     private cdr;
     private focusMonitor;
+    private directionality;
     static ngAcceptInputType_nzDisabled: BooleanInput;
     static ngAcceptInputType_nzAutoFocus: BooleanInput;
     private autoStepTimer?;
     private parsedValue?;
     private value?;
+    private destroy$;
     displayValue?: string | number;
     isFocused: boolean;
     disabledUp: boolean;
     disabledDown: boolean;
+    dir: Direction;
     onChange: OnChangeType;
     onTouched: OnTouchedType;
     readonly nzBlur: EventEmitter<any>;
@@ -61,7 +65,7 @@ export declare class NzInputNumberComponent implements ControlValueAccessor, Aft
     setDisabledState(disabled: boolean): void;
     focus(): void;
     blur(): void;
-    constructor(elementRef: ElementRef, cdr: ChangeDetectorRef, focusMonitor: FocusMonitor);
+    constructor(elementRef: ElementRef, cdr: ChangeDetectorRef, focusMonitor: FocusMonitor, directionality: Directionality);
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
     ngAfterViewInit(): void;

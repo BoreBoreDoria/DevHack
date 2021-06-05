@@ -1,6 +1,7 @@
-import { Injectable, Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, ViewChild, Input, ContentChildren, NgModule } from '@angular/core';
+import { Injectable, Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, ViewChild, Input, Optional, ContentChildren, NgModule } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { PlatformModule } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -109,13 +110,15 @@ NzTimelineItemComponent.propDecorators = {
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 class NzTimelineComponent {
-    constructor(cdr, timelineService) {
+    constructor(cdr, timelineService, directionality) {
         this.cdr = cdr;
         this.timelineService = timelineService;
+        this.directionality = directionality;
         this.nzMode = 'left';
         this.nzReverse = false;
         this.isPendingBoolean = false;
         this.timelineItems = [];
+        this.dir = 'ltr';
         this.destroy$ = new Subject();
     }
     ngOnChanges(changes) {
@@ -128,9 +131,15 @@ class NzTimelineComponent {
         }
     }
     ngOnInit() {
+        var _a;
         this.timelineService.check$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.cdr.markForCheck();
         });
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
     }
     ngAfterContentInit() {
         this.updateChildren();
@@ -170,6 +179,7 @@ NzTimelineComponent.decorators = [
       [class.ant-timeline-alternate]="nzMode === 'alternate' || nzMode === 'custom'"
       [class.ant-timeline-pending]="!!nzPending"
       [class.ant-timeline-reverse]="nzReverse"
+      [class.ant-timeline-rtl]="dir === 'rtl'"
     >
       <!-- pending dot (reversed) -->
       <ng-container *ngIf="nzReverse" [ngTemplateOutlet]="pendingTemplate"></ng-container>
@@ -185,7 +195,8 @@ NzTimelineComponent.decorators = [
         <div class="ant-timeline-item-tail"></div>
         <div class="ant-timeline-item-head ant-timeline-item-head-custom ant-timeline-item-head-blue">
           <ng-container *nzStringTemplateOutlet="nzPendingDot">
-            {{ nzPendingDot }}<i *ngIf="!nzPendingDot" nz-icon nzType="loading"></i>
+            {{ nzPendingDot }}
+            <i *ngIf="!nzPendingDot" nz-icon nzType="loading"></i>
           </ng-container>
         </div>
         <div class="ant-timeline-item-content">
@@ -202,7 +213,8 @@ NzTimelineComponent.decorators = [
 ];
 NzTimelineComponent.ctorParameters = () => [
     { type: ChangeDetectorRef },
-    { type: TimelineService }
+    { type: TimelineService },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzTimelineComponent.propDecorators = {
     listOfItems: [{ type: ContentChildren, args: [NzTimelineItemComponent,] }],
@@ -236,7 +248,7 @@ NzTimelineModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [NzTimelineItemComponent, NzTimelineComponent],
                 exports: [NzTimelineItemComponent, NzTimelineComponent],
-                imports: [CommonModule, PlatformModule, NzIconModule, NzOutletModule]
+                imports: [BidiModule, CommonModule, PlatformModule, NzIconModule, NzOutletModule]
             },] }
 ];
 

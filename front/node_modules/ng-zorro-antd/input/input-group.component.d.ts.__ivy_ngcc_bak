@@ -3,6 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 import { FocusMonitor } from '@angular/cdk/a11y';
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { AfterContentInit, ChangeDetectorRef, ElementRef, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges, TemplateRef } from '@angular/core';
 import { BooleanInput, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { NzInputDirective } from './input.directive';
@@ -14,6 +15,7 @@ export declare class NzInputGroupComponent implements AfterContentInit, OnChange
     private focusMonitor;
     private elementRef;
     private cdr;
+    private directionality;
     static ngAcceptInputType_nzSearch: BooleanInput;
     static ngAcceptInputType_nzCompact: BooleanInput;
     listOfNzInputDirective: QueryList<NzInputDirective>;
@@ -34,8 +36,9 @@ export declare class NzInputGroupComponent implements AfterContentInit, OnChange
     isAddOn: boolean;
     focused: boolean;
     disabled: boolean;
+    dir: Direction;
     private destroy$;
-    constructor(focusMonitor: FocusMonitor, elementRef: ElementRef, cdr: ChangeDetectorRef);
+    constructor(focusMonitor: FocusMonitor, elementRef: ElementRef, cdr: ChangeDetectorRef, directionality: Directionality);
     updateChildrenInputSize(): void;
     ngOnInit(): void;
     ngAfterContentInit(): void;

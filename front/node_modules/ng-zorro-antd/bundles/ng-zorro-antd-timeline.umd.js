@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@angular/cdk/platform'), require('@angular/common'), require('ng-zorro-antd/core/outlet'), require('ng-zorro-antd/icon')) :
-    typeof define === 'function' && define.amd ? define('ng-zorro-antd/timeline', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@angular/cdk/platform', '@angular/common', 'ng-zorro-antd/core/outlet', 'ng-zorro-antd/icon'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global['ng-zorro-antd'] = global['ng-zorro-antd'] || {}, global['ng-zorro-antd'].timeline = {}), global.ng.core, global.rxjs, global.rxjs.operators, global.ng.cdk.platform, global.ng.common, global['ng-zorro-antd'].core.outlet, global['ng-zorro-antd'].icon));
-}(this, (function (exports, core, rxjs, operators, platform, common, outlet, icon) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@angular/cdk/bidi'), require('@angular/cdk/platform'), require('@angular/common'), require('ng-zorro-antd/core/outlet'), require('ng-zorro-antd/icon')) :
+    typeof define === 'function' && define.amd ? define('ng-zorro-antd/timeline', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@angular/cdk/bidi', '@angular/cdk/platform', '@angular/common', 'ng-zorro-antd/core/outlet', 'ng-zorro-antd/icon'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global['ng-zorro-antd'] = global['ng-zorro-antd'] || {}, global['ng-zorro-antd'].timeline = {}), global.ng.core, global.rxjs, global.rxjs.operators, global.ng.cdk.bidi, global.ng.cdk.platform, global.ng.common, global['ng-zorro-antd'].core.outlet, global['ng-zorro-antd'].icon));
+}(this, (function (exports, core, rxjs, operators, bidi, platform, common, outlet, icon) { 'use strict';
 
     /**
      * Use of this source code is governed by an MIT-style license that can be
@@ -84,13 +84,15 @@
      * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
      */
     var NzTimelineComponent = /** @class */ (function () {
-        function NzTimelineComponent(cdr, timelineService) {
+        function NzTimelineComponent(cdr, timelineService, directionality) {
             this.cdr = cdr;
             this.timelineService = timelineService;
+            this.directionality = directionality;
             this.nzMode = 'left';
             this.nzReverse = false;
             this.isPendingBoolean = false;
             this.timelineItems = [];
+            this.dir = 'ltr';
             this.destroy$ = new rxjs.Subject();
         }
         NzTimelineComponent.prototype.ngOnChanges = function (changes) {
@@ -104,9 +106,15 @@
         };
         NzTimelineComponent.prototype.ngOnInit = function () {
             var _this = this;
+            var _a;
             this.timelineService.check$.pipe(operators.takeUntil(this.destroy$)).subscribe(function () {
                 _this.cdr.markForCheck();
             });
+            (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(operators.takeUntil(this.destroy$)).subscribe(function (direction) {
+                _this.dir = direction;
+                _this.cdr.detectChanges();
+            });
+            this.dir = this.directionality.value;
         };
         NzTimelineComponent.prototype.ngAfterContentInit = function () {
             var _this = this;
@@ -142,12 +150,13 @@
                     selector: 'nz-timeline',
                     providers: [TimelineService],
                     exportAs: 'nzTimeline',
-                    template: "\n    <ul\n      class=\"ant-timeline\"\n      [class.ant-timeline-right]=\"nzMode === 'right'\"\n      [class.ant-timeline-alternate]=\"nzMode === 'alternate' || nzMode === 'custom'\"\n      [class.ant-timeline-pending]=\"!!nzPending\"\n      [class.ant-timeline-reverse]=\"nzReverse\"\n    >\n      <!-- pending dot (reversed) -->\n      <ng-container *ngIf=\"nzReverse\" [ngTemplateOutlet]=\"pendingTemplate\"></ng-container>\n      <!-- timeline items -->\n      <ng-container *ngFor=\"let item of timelineItems\">\n        <ng-template [ngTemplateOutlet]=\"item.template\"></ng-template>\n      </ng-container>\n      <ng-container *ngIf=\"!nzReverse\" [ngTemplateOutlet]=\"pendingTemplate\"></ng-container>\n      <!-- pending dot -->\n    </ul>\n    <ng-template #pendingTemplate>\n      <li *ngIf=\"nzPending\" class=\"ant-timeline-item ant-timeline-item-pending\">\n        <div class=\"ant-timeline-item-tail\"></div>\n        <div class=\"ant-timeline-item-head ant-timeline-item-head-custom ant-timeline-item-head-blue\">\n          <ng-container *nzStringTemplateOutlet=\"nzPendingDot\">\n            {{ nzPendingDot }}<i *ngIf=\"!nzPendingDot\" nz-icon nzType=\"loading\"></i>\n          </ng-container>\n        </div>\n        <div class=\"ant-timeline-item-content\">\n          <ng-container *nzStringTemplateOutlet=\"nzPending\">\n            {{ isPendingBoolean ? '' : nzPending }}\n          </ng-container>\n        </div>\n      </li>\n    </ng-template>\n    <!-- Grasp items -->\n    <ng-content></ng-content>\n  "
+                    template: "\n    <ul\n      class=\"ant-timeline\"\n      [class.ant-timeline-right]=\"nzMode === 'right'\"\n      [class.ant-timeline-alternate]=\"nzMode === 'alternate' || nzMode === 'custom'\"\n      [class.ant-timeline-pending]=\"!!nzPending\"\n      [class.ant-timeline-reverse]=\"nzReverse\"\n      [class.ant-timeline-rtl]=\"dir === 'rtl'\"\n    >\n      <!-- pending dot (reversed) -->\n      <ng-container *ngIf=\"nzReverse\" [ngTemplateOutlet]=\"pendingTemplate\"></ng-container>\n      <!-- timeline items -->\n      <ng-container *ngFor=\"let item of timelineItems\">\n        <ng-template [ngTemplateOutlet]=\"item.template\"></ng-template>\n      </ng-container>\n      <ng-container *ngIf=\"!nzReverse\" [ngTemplateOutlet]=\"pendingTemplate\"></ng-container>\n      <!-- pending dot -->\n    </ul>\n    <ng-template #pendingTemplate>\n      <li *ngIf=\"nzPending\" class=\"ant-timeline-item ant-timeline-item-pending\">\n        <div class=\"ant-timeline-item-tail\"></div>\n        <div class=\"ant-timeline-item-head ant-timeline-item-head-custom ant-timeline-item-head-blue\">\n          <ng-container *nzStringTemplateOutlet=\"nzPendingDot\">\n            {{ nzPendingDot }}\n            <i *ngIf=\"!nzPendingDot\" nz-icon nzType=\"loading\"></i>\n          </ng-container>\n        </div>\n        <div class=\"ant-timeline-item-content\">\n          <ng-container *nzStringTemplateOutlet=\"nzPending\">\n            {{ isPendingBoolean ? '' : nzPending }}\n          </ng-container>\n        </div>\n      </li>\n    </ng-template>\n    <!-- Grasp items -->\n    <ng-content></ng-content>\n  "
                 },] }
     ];
     NzTimelineComponent.ctorParameters = function () { return [
         { type: core.ChangeDetectorRef },
-        { type: TimelineService }
+        { type: TimelineService },
+        { type: bidi.Directionality, decorators: [{ type: core.Optional }] }
     ]; };
     NzTimelineComponent.propDecorators = {
         listOfItems: [{ type: core.ContentChildren, args: [NzTimelineItemComponent,] }],
@@ -184,7 +193,7 @@
         { type: core.NgModule, args: [{
                     declarations: [NzTimelineItemComponent, NzTimelineComponent],
                     exports: [NzTimelineItemComponent, NzTimelineComponent],
-                    imports: [common.CommonModule, platform.PlatformModule, icon.NzIconModule, outlet.NzOutletModule]
+                    imports: [bidi.BidiModule, common.CommonModule, platform.PlatformModule, icon.NzIconModule, outlet.NzOutletModule]
                 },] }
     ];
 

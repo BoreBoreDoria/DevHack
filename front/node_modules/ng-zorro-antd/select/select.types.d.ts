@@ -7,21 +7,21 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 export declare type NzSelectModeType = 'default' | 'multiple' | 'tags';
 export interface NzSelectItemInterface {
     template?: TemplateRef<NzSafeAny> | null;
-    nzLabel: string | null;
+    nzLabel: string | number | null;
     nzValue: NzSafeAny | null;
     nzDisabled?: boolean;
     nzHide?: boolean;
     nzCustomContent?: boolean;
-    groupLabel?: string | TemplateRef<NzSafeAny> | null;
+    groupLabel?: string | number | TemplateRef<NzSafeAny> | null;
     type?: string;
     key?: NzSafeAny;
 }
 export interface NzSelectOptionInterface {
-    label: string | null | TemplateRef<NzSafeAny>;
+    label: string | number | null | TemplateRef<NzSafeAny>;
     value: NzSafeAny | null;
     disabled?: boolean;
     hide?: boolean;
-    groupLabel?: string | TemplateRef<NzSafeAny> | null;
+    groupLabel?: string | number | TemplateRef<NzSafeAny> | null;
 }
 export declare type NzSelectTopControlItemType = Partial<NzSelectItemInterface> & {
     contentTemplateOutlet: TemplateRef<NzSafeAny> | null;

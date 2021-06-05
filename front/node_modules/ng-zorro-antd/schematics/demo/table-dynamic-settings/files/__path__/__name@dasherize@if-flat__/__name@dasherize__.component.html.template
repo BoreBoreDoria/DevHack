@@ -2,11 +2,11 @@
     <div class="components-table-demo-control-bar">
       <form nz-form nzLayout="inline" [formGroup]="settingForm!">
         <nz-form-item *ngFor="let switch of listOfSwitch">
-          <nz-form-label> {{ switch.name }} </nz-form-label>
+          <nz-form-label>{{ switch.name }}</nz-form-label>
           <nz-form-control><nz-switch [formControlName]="switch.formControlName"></nz-switch></nz-form-control>
         </nz-form-item>
         <nz-form-item *ngFor="let radio of listOfRadio">
-          <nz-form-label> {{ radio.name }} </nz-form-label>
+          <nz-form-label>{{ radio.name }}</nz-form-label>
           <nz-form-control>
             <nz-radio-group [formControlName]="radio.formControlName">
               <label *ngFor="let o of radio.listOfOption" nz-radio-button [nzValue]="o.value">{{ o.label }}</label>
@@ -23,6 +23,7 @@
       [nzBordered]="settingValue.bordered"
       [nzSimple]="settingValue.simple"
       [nzLoading]="settingValue.loading"
+      [nzPaginationType]="settingValue.paginationType"
       [nzPaginationPosition]="settingValue.position"
       [nzShowSizeChanger]="settingValue.sizeChanger"
       [nzFrontPagination]="settingValue.pagination"
@@ -64,7 +65,7 @@
             </td>
           </tr>
           <tr *ngIf="settingValue.expandable" [nzExpand]="data.expand">
-            <span> {{ data.description }}</span>
+            <span>{{ data.description }}</span>
           </tr>
         </ng-container>
       </tbody>

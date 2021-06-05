@@ -18,6 +18,16 @@ declare const _default: {
     };
     DatePicker: {
         lang: {
+            placeholder: string;
+            yearPlaceholder: string;
+            quarterPlaceholder: string;
+            monthPlaceholder: string;
+            weekPlaceholder: string;
+            rangePlaceholder: string[];
+            rangeYearPlaceholder: string[];
+            rangeMonthPlaceholder: string[];
+            rangeWeekPlaceholder: string[];
+            locale: string;
             today: string;
             now: string;
             backToToday: string;
@@ -47,13 +57,25 @@ declare const _default: {
         };
         timePickerLocale: {
             placeholder: string;
+            rangePlaceholder: string[];
         };
     };
     TimePicker: {
         placeholder: string;
+        rangePlaceholder: string[];
     };
     Calendar: {
         lang: {
+            placeholder: string;
+            yearPlaceholder: string;
+            quarterPlaceholder: string;
+            monthPlaceholder: string;
+            weekPlaceholder: string;
+            rangePlaceholder: string[];
+            rangeYearPlaceholder: string[];
+            rangeMonthPlaceholder: string[];
+            rangeWeekPlaceholder: string[];
+            locale: string;
             today: string;
             now: string;
             backToToday: string;
@@ -83,6 +105,7 @@ declare const _default: {
         };
         timePickerLocale: {
             placeholder: string;
+            rangePlaceholder: string[];
         };
     };
     global: {
@@ -92,9 +115,17 @@ declare const _default: {
         filterTitle: string;
         filterConfirm: string;
         filterReset: string;
+        filterEmptyText: string;
+        emptyText: string;
         selectAll: string;
         selectInvert: string;
+        selectionAll: string;
         sortTitle: string;
+        expand: string;
+        collapse: string;
+        triggerDesc: string;
+        triggerAsc: string;
+        cancelSort: string;
     };
     Modal: {
         okText: string;
@@ -110,12 +141,19 @@ declare const _default: {
         searchPlaceholder: string;
         itemUnit: string;
         itemsUnit: string;
+        remove: string;
+        selectCurrent: string;
+        removeCurrent: string;
+        selectAll: string;
+        removeAll: string;
+        selectInvert: string;
     };
     Upload: {
         uploading: string;
         removeFile: string;
         uploadError: string;
         previewFile: string;
+        downloadFile: string;
     };
     Empty: {
         description: string;

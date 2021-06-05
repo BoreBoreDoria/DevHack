@@ -8,6 +8,7 @@ exports.SchematicsTestTsConfig = {
     }
 };
 exports.SchematicsTestNGConfig = {
+    version: 1,
     projects: { t: { root: '', architect: { build: { options: { tsConfig: './tsconfig.json' } } } } }
 };
 //# sourceMappingURL=config.js.map

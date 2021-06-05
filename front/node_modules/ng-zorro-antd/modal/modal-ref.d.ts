@@ -29,12 +29,6 @@ export declare class NzModalRef<T = NzSafeAny, R = NzSafeAny> implements NzModal
     destroy(result?: R): void;
     triggerOk(): Promise<void>;
     triggerCancel(): Promise<void>;
-    /**
-     * Open the modal.
-     * @deprecated Opened when create, this method is useless.
-     * @breaking-change 11.0.0
-     */
-    open(): void;
     close(result?: R): void;
     updateConfig(config: ModalOptions): void;
     getState(): NzModalState;

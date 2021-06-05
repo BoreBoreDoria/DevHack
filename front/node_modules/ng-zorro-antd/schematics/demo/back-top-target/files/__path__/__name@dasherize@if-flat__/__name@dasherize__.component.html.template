@@ -1,6 +1,6 @@
 
     Scroll down to see the bottom-right
-    <strong> gray </strong>
+    <strong>gray</strong>
     button.
     <div class="long-div" #divTarget>
       <div class="long-div-inner"></div>

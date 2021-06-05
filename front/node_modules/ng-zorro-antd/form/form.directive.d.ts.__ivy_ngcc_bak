@@ -2,6 +2,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { ElementRef, OnChanges, OnDestroy, Renderer2, SimpleChange, SimpleChanges } from '@angular/core';
 import { ThemeType } from '@ant-design/icons-angular';
 import { NzConfigKey, NzConfigService } from 'ng-zorro-antd/core/config';
@@ -15,6 +16,7 @@ export declare const DefaultTooltipIcon: {
 export declare class NzFormDirective implements OnChanges, OnDestroy, InputObservable {
     nzConfigService: NzConfigService;
     private renderer;
+    private directionality;
     readonly _nzModuleName: NzConfigKey;
     static ngAcceptInputType_nzNoColon: BooleanInput;
     static ngAcceptInputType_nzDisableAutoTips: BooleanInput;
@@ -26,10 +28,11 @@ export declare class NzFormDirective implements OnChanges, OnDestroy, InputObser
         type: string;
         theme: ThemeType;
     };
+    dir: Direction;
     destroy$: Subject<unknown>;
     private inputChanges$;
     getInputObservable<K extends keyof this>(changeType: K): Observable<SimpleChange>;
-    constructor(nzConfigService: NzConfigService, elementRef: ElementRef, renderer: Renderer2);
+    constructor(nzConfigService: NzConfigService, elementRef: ElementRef, renderer: Renderer2, directionality: Directionality);
     ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
 }

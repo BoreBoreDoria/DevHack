@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postUpdate = exports.updateToV10 = exports.updateToV9 = exports.updateToV7 = void 0;
+exports.postUpdate = exports.updateToV11 = exports.updateToV10 = exports.updateToV9 = exports.updateToV7 = void 0;
 const schematics_1 = require("@angular/cdk/schematics");
 const class_names_1 = require("./data/migrations/class-names");
 const upgrade_data_1 = require("./upgrade-data");
@@ -13,8 +13,12 @@ const form_template_rule_1 = require("./upgrade-rules/checks/form-template-rule"
 const global_config_rule_1 = require("./upgrade-rules/checks/global-config-rule");
 const grid_template_rule_1 = require("./upgrade-rules/checks/grid-template-rule");
 const icon_template_rule_1 = require("./upgrade-rules/checks/icon-template-rule");
+const modal_template_rule_1 = require("./upgrade-rules/checks/modal-template-rule");
 const secondary_entry_points_rule_1 = require("./upgrade-rules/checks/secondary-entry-points-rule");
 const table_template_rule_1 = require("./upgrade-rules/checks/table-template-rule");
+const tabs_input_rule_1 = require("./upgrade-rules/checks/tabs-input-rule");
+const tabs_output_rule_1 = require("./upgrade-rules/checks/tabs-output-rule");
+const tabs_template_rule_1 = require("./upgrade-rules/checks/tabs-template-rule");
 const tooltip_like_template_rule_1 = require("./upgrade-rules/checks/tooltip-like-template-rule");
 const migrations = [
     tooltip_like_template_rule_1.TooltipLikeTemplateRule,
@@ -27,7 +31,11 @@ const migrations = [
     date_fns_compatible_rule_1.DateFnsCompatibleRule,
     form_template_rule_1.FormTemplateRule,
     grid_template_rule_1.GridTemplateRule,
+    tabs_input_rule_1.TabsInputRule,
+    tabs_output_rule_1.TabsOutputRule,
+    tabs_template_rule_1.TabsTemplateRule,
     table_template_rule_1.TableTemplateRule,
+    modal_template_rule_1.ModalTemplateRule,
     secondary_entry_points_rule_1.SecondaryEntryPointsRule,
     class_names_1.ClassNamesMigration
 ];
@@ -46,6 +54,11 @@ function updateToV10() {
     return schematics_1.createMigrationSchematicRule(schematics_1.TargetVersion.V10, migrations, upgrade_data_1.ruleUpgradeData, postUpdate);
 }
 exports.updateToV10 = updateToV10;
+/** Entry point for the migration schematics with target of NG-ZORRO v11 */
+function updateToV11() {
+    return schematics_1.createMigrationSchematicRule(schematics_1.TargetVersion.V11, migrations, upgrade_data_1.ruleUpgradeData, postUpdate);
+}
+exports.updateToV11 = updateToV11;
 /** Post-update schematic to be called when update is finished. */
 function postUpdate(context, targetVersion, hasFailures) {
     context.logger.info('');

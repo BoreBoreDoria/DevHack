@@ -7,6 +7,7 @@ import { NzScrollService } from 'ng-zorro-antd/core/services';
 import { InputBoolean, InputNumber } from 'ng-zorro-antd/core/util';
 import { Subject, fromEvent } from 'rxjs';
 import { throttleTime, takeUntil } from 'rxjs/operators';
+import { BidiModule } from '@angular/cdk/bidi';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 
 /**
@@ -325,7 +326,7 @@ NzAnchorModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [NzAnchorComponent, NzAnchorLinkComponent],
                 exports: [NzAnchorComponent, NzAnchorLinkComponent],
-                imports: [CommonModule, NzAffixModule, PlatformModule]
+                imports: [BidiModule, CommonModule, NzAffixModule, PlatformModule]
             },] }
 ];
 

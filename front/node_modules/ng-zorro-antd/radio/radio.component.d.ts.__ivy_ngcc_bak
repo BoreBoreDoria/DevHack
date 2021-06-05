@@ -5,6 +5,7 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { AfterViewInit, ChangeDetectorRef, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { BooleanInput, NzSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { NzRadioButtonDirective } from './radio-button.directive';
 import { NzRadioService } from './radio.service';
@@ -12,6 +13,7 @@ export declare class NzRadioComponent implements ControlValueAccessor, AfterView
     private elementRef;
     private cdr;
     private focusMonitor;
+    private directionality;
     private nzRadioService;
     private nzRadioButtonDirective;
     static ngAcceptInputType_nzDisabled: BooleanInput;
@@ -27,10 +29,11 @@ export declare class NzRadioComponent implements ControlValueAccessor, AfterView
     nzValue: NzSafeAny | null;
     nzDisabled: boolean;
     nzAutoFocus: boolean;
+    dir: Direction;
     onHostClick(event: MouseEvent): void;
     focus(): void;
     blur(): void;
-    constructor(elementRef: ElementRef, cdr: ChangeDetectorRef, focusMonitor: FocusMonitor, nzRadioService: NzRadioService, nzRadioButtonDirective: NzRadioButtonDirective);
+    constructor(elementRef: ElementRef, cdr: ChangeDetectorRef, focusMonitor: FocusMonitor, directionality: Directionality, nzRadioService: NzRadioService, nzRadioButtonDirective: NzRadioButtonDirective);
     setDisabledState(disabled: boolean): void;
     writeValue(value: boolean): void;
     registerOnChange(fn: OnChangeType): void;

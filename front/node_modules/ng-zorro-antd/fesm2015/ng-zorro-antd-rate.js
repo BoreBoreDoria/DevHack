@@ -1,6 +1,7 @@
 import { __decorate, __metadata } from 'tslib';
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
-import { EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, forwardRef, Renderer2, ChangeDetectorRef, ViewChild, Input, Output, NgModule } from '@angular/core';
+import { EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, forwardRef, Renderer2, ChangeDetectorRef, Optional, ViewChild, Input, Output, NgModule } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { Subject } from 'rxjs';
@@ -16,10 +17,11 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
  */
 const NZ_CONFIG_MODULE_NAME = 'rate';
 class NzRateComponent {
-    constructor(nzConfigService, renderer, cdr) {
+    constructor(nzConfigService, renderer, cdr, directionality) {
         this.nzConfigService = nzConfigService;
         this.renderer = renderer;
         this.cdr = cdr;
+        this.directionality = directionality;
         this._nzModuleName = NZ_CONFIG_MODULE_NAME;
         this.nzAllowClear = true;
         this.nzAllowHalf = false;
@@ -34,6 +36,7 @@ class NzRateComponent {
         this.classMap = {};
         this.starArray = [];
         this.starStyleArray = [];
+        this.dir = 'ltr';
         this.destroy$ = new Subject();
         this.hasHalf = false;
         this.hoverValue = 0;
@@ -72,10 +75,16 @@ class NzRateComponent {
         }
     }
     ngOnInit() {
+        var _a;
         this.nzConfigService
             .getConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME)
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => this.cdr.markForCheck());
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
     }
     ngOnDestroy() {
         this.destroy$.next();
@@ -188,6 +197,7 @@ NzRateComponent.decorators = [
       #ulElement
       class="ant-rate"
       [class.ant-rate-disabled]="nzDisabled"
+      [class.ant-rate-rtl]="dir === 'rtl'"
       [ngClass]="classMap"
       (blur)="onBlur($event)"
       (focus)="onFocus($event)"
@@ -224,7 +234,8 @@ NzRateComponent.decorators = [
 NzRateComponent.ctorParameters = () => [
     { type: NzConfigService },
     { type: Renderer2 },
-    { type: ChangeDetectorRef }
+    { type: ChangeDetectorRef },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzRateComponent.propDecorators = {
     ulElement: [{ type: ViewChild, args: ['ulElement', { static: false },] }],
@@ -321,7 +332,7 @@ NzRateModule.decorators = [
     { type: NgModule, args: [{
                 exports: [NzRateComponent],
                 declarations: [NzRateComponent, NzRateItemComponent],
-                imports: [CommonModule, NzIconModule, NzToolTipModule]
+                imports: [BidiModule, CommonModule, NzIconModule, NzToolTipModule]
             },] }
 ];
 

@@ -15,6 +15,7 @@ export declare class NzSliderMarksComponent implements OnChanges {
     max: number;
     vertical: boolean;
     included: boolean;
+    reverse: boolean;
     marks: NzDisplayedMark[];
     ngOnChanges(changes: SimpleChanges): void;
     trackById(_index: number, mark: NzDisplayedMark): number;

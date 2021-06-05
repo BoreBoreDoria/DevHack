@@ -6,6 +6,7 @@ import { ChangeDetectorRef, ComponentFactory, ComponentFactoryResolver, ElementR
 import { NzPresetColor } from 'ng-zorro-antd/core/color';
 import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { NgStyleInterface, NzTSType } from 'ng-zorro-antd/core/types';
+import { Directionality } from '@angular/cdk/bidi';
 import { NzTooltipBaseComponent, NzTooltipBaseDirective, NzTooltipTrigger, PropertyMapping } from './base';
 export declare class NzTooltipDirective extends NzTooltipBaseDirective {
     title?: NzTSType | null;
@@ -29,7 +30,7 @@ export declare class NzToolTipComponent extends NzTooltipBaseComponent {
     nzTitle: NzTSType | null;
     nzColor?: string | NzPresetColor;
     _contentStyleMap: NgStyleInterface;
-    constructor(cdr: ChangeDetectorRef, noAnimation?: NzNoAnimationDirective | undefined);
+    constructor(cdr: ChangeDetectorRef, directionality: Directionality, noAnimation?: NzNoAnimationDirective | undefined);
     protected isEmpty(): boolean;
     updateStyles(): void;
 }

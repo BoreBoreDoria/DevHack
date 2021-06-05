@@ -1,11 +1,12 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, Injector, NgZone, ChangeDetectorRef, ElementRef, Renderer2, Input, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, Injector, NgZone, ChangeDetectorRef, ElementRef, Renderer2, Optional, Input, NgModule } from '@angular/core';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { __decorate, __metadata } from 'tslib';
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { Router, ActivatedRoute, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
 import { PREFIX } from 'ng-zorro-antd/core/logger';
 import { InputBoolean } from 'ng-zorro-antd/core/util';
 import { Subject } from 'rxjs';
-import { filter, takeUntil, startWith } from 'rxjs/operators';
+import { takeUntil, filter, startWith } from 'rxjs/operators';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -17,22 +18,34 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 class NzBreadCrumbComponent {
-    constructor(injector, ngZone, cdr, elementRef, renderer) {
+    constructor(injector, ngZone, cdr, elementRef, renderer, directionality) {
         this.injector = injector;
         this.ngZone = ngZone;
         this.cdr = cdr;
+        this.elementRef = elementRef;
+        this.renderer = renderer;
+        this.directionality = directionality;
         this.nzAutoGenerate = false;
         this.nzSeparator = '/';
         this.nzRouteLabel = 'breadcrumb';
         this.nzRouteLabelFn = label => label;
         this.breadcrumbs = [];
+        this.dir = 'ltr';
         this.destroy$ = new Subject();
         renderer.addClass(elementRef.nativeElement, 'ant-breadcrumb');
     }
     ngOnInit() {
+        var _a;
         if (this.nzAutoGenerate) {
             this.registerRouterChange();
         }
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.prepareComponentForRtl();
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
+        this.prepareComponentForRtl();
     }
     ngOnDestroy() {
         this.destroy$.next();
@@ -89,6 +102,14 @@ class NzBreadCrumbComponent {
         }
         return breadcrumbs;
     }
+    prepareComponentForRtl() {
+        if (this.dir === 'rtl') {
+            this.renderer.addClass(this.elementRef.nativeElement, 'ant-breadcrumb-rtl');
+        }
+        else {
+            this.renderer.removeClass(this.elementRef.nativeElement, 'ant-breadcrumb-rtl');
+        }
+    }
 }
 NzBreadCrumbComponent.decorators = [
     { type: Component, args: [{
@@ -112,7 +133,8 @@ NzBreadCrumbComponent.ctorParameters = () => [
     { type: NgZone },
     { type: ChangeDetectorRef },
     { type: ElementRef },
-    { type: Renderer2 }
+    { type: Renderer2 },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzBreadCrumbComponent.propDecorators = {
     nzAutoGenerate: [{ type: Input }],
@@ -198,7 +220,7 @@ NzBreadCrumbModule.decorators = [
     { type: NgModule, args: [{
                 imports: [CommonModule, NzOutletModule, OverlayModule, NzOverlayModule, NzDropDownModule, NzIconModule],
                 declarations: [NzBreadCrumbComponent, NzBreadCrumbItemComponent, NzBreadCrumbSeparatorComponent],
-                exports: [NzBreadCrumbComponent, NzBreadCrumbItemComponent, NzBreadCrumbSeparatorComponent]
+                exports: [BidiModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, NzBreadCrumbSeparatorComponent]
             },] }
 ];
 

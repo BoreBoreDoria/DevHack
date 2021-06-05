@@ -1,10 +1,13 @@
 import { __decorate, __metadata } from 'tslib';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { LEFT_ARROW, RIGHT_ARROW, SPACE, ENTER } from '@angular/cdk/keycodes';
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, forwardRef, ChangeDetectorRef, ViewChild, Input, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, forwardRef, ChangeDetectorRef, Optional, ViewChild, Input, NgModule } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { InputBoolean } from 'ng-zorro-antd/core/util';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzWaveModule } from 'ng-zorro-antd/core/wave';
@@ -16,10 +19,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
  */
 const NZ_CONFIG_MODULE_NAME = 'switch';
 class NzSwitchComponent {
-    constructor(nzConfigService, cdr, focusMonitor) {
+    constructor(nzConfigService, cdr, focusMonitor, directionality) {
         this.nzConfigService = nzConfigService;
         this.cdr = cdr;
         this.focusMonitor = focusMonitor;
+        this.directionality = directionality;
         this._nzModuleName = NZ_CONFIG_MODULE_NAME;
         this.isChecked = false;
         this.onChange = () => { };
@@ -30,6 +34,8 @@ class NzSwitchComponent {
         this.nzCheckedChildren = null;
         this.nzUnCheckedChildren = null;
         this.nzSize = 'default';
+        this.dir = 'ltr';
+        this.destroy$ = new Subject();
     }
     onHostClick(e) {
         e.preventDefault();
@@ -67,6 +73,14 @@ class NzSwitchComponent {
         var _a;
         (_a = this.switchElement) === null || _a === void 0 ? void 0 : _a.nativeElement.blur();
     }
+    ngOnInit() {
+        var _a;
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
+    }
     ngAfterViewInit() {
         this.focusMonitor.monitor(this.switchElement.nativeElement, true).subscribe(focusOrigin => {
             if (!focusOrigin) {
@@ -77,6 +91,8 @@ class NzSwitchComponent {
     }
     ngOnDestroy() {
         this.focusMonitor.stopMonitoring(this.switchElement.nativeElement);
+        this.destroy$.next();
+        this.destroy$.complete();
     }
     writeValue(value) {
         this.isChecked = value;
@@ -118,6 +134,7 @@ NzSwitchComponent.decorators = [
       [class.ant-switch-loading]="nzLoading"
       [class.ant-switch-disabled]="nzDisabled"
       [class.ant-switch-small]="nzSize === 'small'"
+      [class.ant-switch-rtl]="dir === 'rtl'"
       [nzWaveExtraNode]="true"
       (keydown)="onKeyDown($event)"
     >
@@ -143,7 +160,8 @@ NzSwitchComponent.decorators = [
 NzSwitchComponent.ctorParameters = () => [
     { type: NzConfigService },
     { type: ChangeDetectorRef },
-    { type: FocusMonitor }
+    { type: FocusMonitor },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzSwitchComponent.propDecorators = {
     switchElement: [{ type: ViewChild, args: ['switchElement', { static: true },] }],
@@ -181,7 +199,7 @@ NzSwitchModule.decorators = [
     { type: NgModule, args: [{
                 exports: [NzSwitchComponent],
                 declarations: [NzSwitchComponent],
-                imports: [CommonModule, NzWaveModule, NzIconModule, NzOutletModule]
+                imports: [BidiModule, CommonModule, NzWaveModule, NzIconModule, NzOutletModule]
             },] }
 ];
 

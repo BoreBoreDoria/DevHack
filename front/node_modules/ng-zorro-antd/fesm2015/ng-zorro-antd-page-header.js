@@ -1,3 +1,4 @@
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { Location, CommonModule } from '@angular/common';
 import { Directive, EventEmitter, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, ElementRef, ChangeDetectorRef, Input, Output, ContentChild, NgModule } from '@angular/core';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -7,7 +8,7 @@ import { NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { PREFIX } from 'ng-zorro-antd/core/logger';
 import { NzResizeObserver } from 'ng-zorro-antd/core/resize-observers';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 
 /**
  * Use of this source code is governed by an MIT-style license that can be
@@ -102,18 +103,28 @@ NzPageHeaderAvatarDirective.decorators = [
  */
 const NZ_CONFIG_MODULE_NAME = 'pageHeader';
 class NzPageHeaderComponent {
-    constructor(location, nzConfigService, elementRef, nzResizeObserver, cdr) {
+    constructor(location, nzConfigService, elementRef, nzResizeObserver, cdr, directionality) {
         this.location = location;
         this.nzConfigService = nzConfigService;
         this.elementRef = elementRef;
         this.nzResizeObserver = nzResizeObserver;
         this.cdr = cdr;
+        this.directionality = directionality;
         this._nzModuleName = NZ_CONFIG_MODULE_NAME;
         this.nzBackIcon = null;
         this.nzGhost = true;
         this.nzBack = new EventEmitter();
         this.compact = false;
         this.destroy$ = new Subject();
+        this.dir = 'ltr';
+    }
+    ngOnInit() {
+        var _a;
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+            this.cdr.detectChanges();
+        });
+        this.dir = this.directionality.value;
     }
     ngAfterViewInit() {
         this.nzResizeObserver
@@ -139,6 +150,12 @@ class NzPageHeaderComponent {
         this.destroy$.next();
         this.destroy$.complete();
     }
+    getBackIcon() {
+        if (this.dir === 'rtl') {
+            return 'arrow-right';
+        }
+        return 'arrow-left';
+    }
 }
 NzPageHeaderComponent.decorators = [
     { type: Component, args: [{
@@ -153,7 +170,7 @@ NzPageHeaderComponent.decorators = [
         <div *ngIf="nzBackIcon !== null" (click)="onBack()" class="ant-page-header-back">
           <div role="button" tabindex="0" class="ant-page-header-back-button">
             <ng-container *nzStringTemplateOutlet="nzBackIcon; let backIcon">
-              <i nz-icon [nzType]="backIcon || 'arrow-left'" nzTheme="outline"></i>
+              <i nz-icon [nzType]="backIcon || getBackIcon()" nzTheme="outline"></i>
             </ng-container>
           </div>
         </div>
@@ -185,7 +202,8 @@ NzPageHeaderComponent.decorators = [
                     '[class.has-footer]': 'nzPageHeaderFooter',
                     '[class.ant-page-header-ghost]': 'nzGhost',
                     '[class.has-breadcrumb]': 'nzPageHeaderBreadcrumb',
-                    '[class.ant-page-header-compact]': 'compact'
+                    '[class.ant-page-header-compact]': 'compact',
+                    '[class.ant-page-header-rtl]': `dir === 'rtl'`
                 }
             },] }
 ];
@@ -194,7 +212,8 @@ NzPageHeaderComponent.ctorParameters = () => [
     { type: NzConfigService },
     { type: ElementRef },
     { type: NzResizeObserver },
-    { type: ChangeDetectorRef }
+    { type: ChangeDetectorRef },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzPageHeaderComponent.propDecorators = {
     nzBackIcon: [{ type: Input }],
@@ -228,7 +247,7 @@ class NzPageHeaderModule {
 }
 NzPageHeaderModule.decorators = [
     { type: NgModule, args: [{
-                imports: [CommonModule, NzOutletModule, NzIconModule],
+                imports: [BidiModule, CommonModule, NzOutletModule, NzIconModule],
                 exports: [NzPageHeaderComponent, NzPageHeaderCells],
                 declarations: [NzPageHeaderComponent, NzPageHeaderCells]
             },] }

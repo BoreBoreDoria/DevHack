@@ -1,7 +1,8 @@
+import { Directionality, BidiModule } from '@angular/cdk/bidi';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PlatformModule } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
-import { Directive, ElementRef, Renderer2, Input, Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, Optional, Host, ContentChild, SkipSelf, NgModule } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Optional, Input, Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, Host, ContentChild, SkipSelf, NgModule } from '@angular/core';
 import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -11,7 +12,7 @@ import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { InputBoolean, toBoolean } from 'ng-zorro-antd/core/util';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { Subject, Subscription } from 'rxjs';
-import { filter, map, tap, startWith, takeUntil } from 'rxjs/operators';
+import { takeUntil, filter, map, tap, startWith } from 'rxjs/operators';
 import { __decorate, __metadata } from 'tslib';
 import { NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 
@@ -25,18 +26,25 @@ const DefaultTooltipIcon = {
     theme: 'outline'
 };
 class NzFormDirective {
-    constructor(nzConfigService, elementRef, renderer) {
+    constructor(nzConfigService, elementRef, renderer, directionality) {
+        var _a;
         this.nzConfigService = nzConfigService;
         this.renderer = renderer;
+        this.directionality = directionality;
         this._nzModuleName = NZ_CONFIG_MODULE_NAME;
         this.nzLayout = 'horizontal';
         this.nzNoColon = false;
         this.nzAutoTips = {};
         this.nzDisableAutoTips = false;
         this.nzTooltipIcon = DefaultTooltipIcon;
+        this.dir = 'ltr';
         this.destroy$ = new Subject();
         this.inputChanges$ = new Subject();
         this.renderer.addClass(elementRef.nativeElement, 'ant-form');
+        this.dir = this.directionality.value;
+        (_a = this.directionality.change) === null || _a === void 0 ? void 0 : _a.pipe(takeUntil(this.destroy$)).subscribe((direction) => {
+            this.dir = direction;
+        });
     }
     getInputObservable(changeType) {
         return this.inputChanges$.pipe(filter(changes => changeType in changes), map(value => value[changeType]));
@@ -57,14 +65,16 @@ NzFormDirective.decorators = [
                 host: {
                     '[class.ant-form-horizontal]': `nzLayout === 'horizontal'`,
                     '[class.ant-form-vertical]': `nzLayout === 'vertical'`,
-                    '[class.ant-form-inline]': `nzLayout === 'inline'`
+                    '[class.ant-form-inline]': `nzLayout === 'inline'`,
+                    '[class.ant-form-rtl]': `dir === 'rtl'`
                 }
             },] }
 ];
 NzFormDirective.ctorParameters = () => [
     { type: NzConfigService },
     { type: ElementRef },
-    { type: Renderer2 }
+    { type: Renderer2 },
+    { type: Directionality, decorators: [{ type: Optional }] }
 ];
 NzFormDirective.propDecorators = {
     nzLayout: [{ type: Input }],
@@ -537,7 +547,7 @@ NzFormModule.decorators = [
                     NzFormTextComponent,
                     NzFormSplitComponent
                 ],
-                imports: [CommonModule, NzGridModule, NzIconModule, NzToolTipModule, LayoutModule, PlatformModule, NzOutletModule]
+                imports: [BidiModule, CommonModule, NzGridModule, NzIconModule, NzToolTipModule, LayoutModule, PlatformModule, NzOutletModule]
             },] }
 ];
 

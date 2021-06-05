@@ -15,8 +15,7 @@ import { NzFormatEmitEvent, NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-
       (nzContextMenu)="nzClick($event)"
       (nzCheckBoxChange)="nzCheck($event)"
       (nzExpandChange)="nzCheck($event)"
-    >
-    </nz-tree>
+    ></nz-tree>
   `<% } else { %>templateUrl: './<%= dasherize(name) %>.component.html'<% } %>
 })
 export class <%= classify(name) %>Component implements AfterViewInit {

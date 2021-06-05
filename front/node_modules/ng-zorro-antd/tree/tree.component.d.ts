@@ -2,6 +2,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
+import { Direction, Directionality } from '@angular/cdk/bidi';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AfterViewInit, ChangeDetectorRef, EventEmitter, OnChanges, OnDestroy, OnInit, SimpleChange, TemplateRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
@@ -15,6 +16,7 @@ export declare function NzTreeServiceFactory(higherOrderService: NzTreeBaseServi
 export declare class NzTreeComponent extends NzTreeBase implements OnInit, OnDestroy, ControlValueAccessor, OnChanges, AfterViewInit {
     nzConfigService: NzConfigService;
     private cdr;
+    private directionality;
     noAnimation?: NzNoAnimationDirective | undefined;
     readonly _nzModuleName: NzConfigKey;
     static ngAcceptInputType_nzShowIcon: BooleanInput;
@@ -67,6 +69,7 @@ export declare class NzTreeComponent extends NzTreeBase implements OnInit, OnDes
     cdkVirtualScrollViewport: CdkVirtualScrollViewport;
     nzFlattenNodes: NzTreeNode[];
     beforeInit: boolean;
+    dir: Direction;
     readonly nzExpandedKeysChange: EventEmitter<string[]>;
     readonly nzSelectedKeysChange: EventEmitter<string[]>;
     readonly nzCheckedKeysChange: EventEmitter<string[]>;
@@ -126,7 +129,7 @@ export declare class NzTreeComponent extends NzTreeBase implements OnInit, OnDes
      * Click expand icon
      */
     renderTree(): void;
-    constructor(nzTreeService: NzTreeBaseService, nzConfigService: NzConfigService, cdr: ChangeDetectorRef, noAnimation?: NzNoAnimationDirective | undefined);
+    constructor(nzTreeService: NzTreeBaseService, nzConfigService: NzConfigService, cdr: ChangeDetectorRef, directionality: Directionality, noAnimation?: NzNoAnimationDirective | undefined);
     ngOnInit(): void;
     ngOnChanges(changes: {
         [propertyName: string]: SimpleChange;

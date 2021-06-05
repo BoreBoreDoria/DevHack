@@ -14,7 +14,7 @@ export declare class NzWaveRenderer {
     private extraNode;
     private lastTime;
     private platform;
-    clickHandler: () => void;
+    clickHandler: (event: MouseEvent) => void;
     get waveAttributeName(): string;
     constructor(triggerElement: HTMLElement, ngZone: NgZone, insertExtraNode: boolean, platformId: NzSafeAny);
     onClick: (event: MouseEvent) => void;

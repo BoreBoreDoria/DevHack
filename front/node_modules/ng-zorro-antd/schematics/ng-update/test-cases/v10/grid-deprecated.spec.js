@@ -9,23 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular-devkit/core");
-const testing_1 = require("@angular-devkit/core/node/testing");
 const schematics_1 = require("@angular-devkit/schematics");
-const testing_2 = require("@angular-devkit/schematics/testing");
-const shx = require("shelljs");
+const testing_1 = require("@angular-devkit/schematics/testing");
+const test_app_1 = require("../../../testing/test-app");
 const config_1 = require("../config");
 describe('v10 form components migration', () => {
     let runner;
     let host;
     let tree;
-    let tmpDirPath;
-    let previousWorkingDir;
     let warnOutput;
-    beforeEach(() => {
-        runner = new testing_2.SchematicTestRunner('test', require.resolve('../../../migration.json'));
-        host = new testing_1.TempScopedNodeJsSyncHost();
-        tree = new testing_2.UnitTestTree(new schematics_1.HostTree(host));
+    beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        runner = new testing_1.SchematicTestRunner('test', require.resolve('../../../migration.json'));
+        host = new schematics_1.HostTree();
+        tree = yield test_app_1.createTestApp(runner, { name: 'testing' }, host);
+        tree.files.forEach(f => writeFile(f, tree.readContent(f)));
         writeFile('/tsconfig.json', JSON.stringify(config_1.SchematicsTestTsConfig));
         writeFile('/angular.json', JSON.stringify(config_1.SchematicsTestNGConfig));
         warnOutput = [];
@@ -34,18 +31,14 @@ describe('v10 form components migration', () => {
                 warnOutput.push(logEntry.message);
             }
         });
-        previousWorkingDir = shx.pwd();
-        tmpDirPath = core_1.getSystemPath(host.root);
-        shx.cd(tmpDirPath);
-        writeFakeAngular();
-    });
-    afterEach(() => {
-        shx.cd(previousWorkingDir);
-        shx.rm('-r', tmpDirPath);
-    });
-    function writeFakeAngular() { writeFile('/node_modules/@angular/core/index.d.ts', ``); }
-    function writeFile(filePath, contents) {
-        host.sync.write(core_1.normalize(filePath), core_1.virtualFs.stringToFileBuffer(contents));
+    }));
+    function writeFile(filePath, content) {
+        if (host.exists(filePath)) {
+            host.overwrite(filePath, content);
+        }
+        else {
+            host.create(filePath, content);
+        }
     }
     // tslint:disable-next-line:no-any
     function runMigration() {

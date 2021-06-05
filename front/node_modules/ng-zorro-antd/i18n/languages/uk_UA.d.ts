@@ -19,7 +19,14 @@ declare const _default: {
     DatePicker: {
         lang: {
             placeholder: string;
+            yearPlaceholder: string;
+            quarterPlaceholder: string;
+            monthPlaceholder: string;
+            weekPlaceholder: string;
             rangePlaceholder: string[];
+            rangeYearPlaceholder: string[];
+            rangeMonthPlaceholder: string[];
+            rangeWeekPlaceholder: string[];
             locale: string;
             today: string;
             now: string;
@@ -49,10 +56,12 @@ declare const _default: {
         };
         timePickerLocale: {
             placeholder: string;
+            rangePlaceholder: string[];
         };
     };
     TimePicker: {
         placeholder: string;
+        rangePlaceholder: string[];
     };
     Calendar: {
         lang: {
@@ -119,6 +128,18 @@ declare const _default: {
     };
     Empty: {
         description: string;
+    };
+    Icon: {
+        icon: string;
+    };
+    Text: {
+        edit: string;
+        copy: string;
+        copied: string;
+        expand: string;
+    };
+    PageHeader: {
+        back: string;
     };
 };
 export default _default;
