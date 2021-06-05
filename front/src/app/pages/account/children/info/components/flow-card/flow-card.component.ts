@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FlowNameStatuses, FlowNameTypes} from "../../../../../../models/flow";
 
 @Component({
@@ -8,7 +8,6 @@ import {FlowNameStatuses, FlowNameTypes} from "../../../../../../models/flow";
 })
 export class FlowCardComponent implements OnInit {
 
-  @Input() title;
   @Input() type: FlowNameTypes;
 
   @Output() cardClick = new EventEmitter();
@@ -19,6 +18,12 @@ export class FlowCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  getTitleByType(type: FlowNameTypes) {
+    if (type === FlowNameTypes.CreateCurrency) {
+      return 'Конвертация валюты';
+    }
   }
 
 }

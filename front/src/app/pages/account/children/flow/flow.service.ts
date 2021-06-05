@@ -24,7 +24,7 @@ export class FlowService {
               private appService: AppService
               ) { }
 
-  async initFlow(flowName: FlowNameTypes, clientId?, value?, step?: 'start' | number | 'order') {
+  async initFlow(flowName: FlowNameTypes, clientId?, value?, step?: 'start' | number | 'end') {
     if (step === 'start') {
       const flow = (await this.startFlow({
         flowName,
@@ -48,7 +48,7 @@ export class FlowService {
       this.flowStore.update({
         flow
       });
-    } else if (step === 'order') {
+    } else if (step === 'end') {
       const flow = (await this.createOrder({
         flowName,
         valueList: value
@@ -66,7 +66,6 @@ export class FlowService {
     clientId: number,
     flowName: string
   }) {
-    console.log('START FLOW');
     return this.appService.isMockData ? of({
       flowName: FlowNameTypes.CreateCurrency,
       status: FlowNameStatuses.Success,
@@ -99,7 +98,8 @@ export class FlowService {
         this.steps$.next([
           {
             title: flow.data.section.title,
-            order: 0
+            order: 0,
+            value: null
           }
         ]);
       })
@@ -109,7 +109,8 @@ export class FlowService {
           this.steps$.next([
             {
               title: flow.data.section.title,
-              order: 0
+              order: 0,
+              value: null
             }
           ]);
         })
@@ -119,38 +120,73 @@ export class FlowService {
   stepFlow(data: {
     flowName: FlowNameTypes;
     step: number;
-    value: string
+    value: any;
   }) {
-    console.log('STEP FLOW', data);
-    return this.appService.isMockData ? of({
-      flowName: 'createCurrencyFlow',
-      status: FlowNameStatuses.Success,
-      errorMessage: null,
-      data: {
-        section: {
-          title: '3 шаг: Сумма',
-          textInfo: {
-            textType: 'INFO',
-            text: 'Введите сколько валюты вы хотите купить'
-          }
-        },
-        widget: {
-          widgetType: FlowWidgetTypes.FloatNumber,
-          widgetBody: {
-            min: 1.0,
-            max: 5000.0,
-            text: 'Введите сумму от 1 до 5000',
-            hint: 'Введите сумму',
-            error: 'Вы должны ввести сумму от 1 до 5000'
+    let step;
+
+    if (data.step === 1) {
+      step = {
+        flowName: 'createCurrencyFlow',
+        status: FlowNameStatuses.Success,
+        errorMessage: null,
+        data: {
+          section: {
+            title: '2 шаг: Валюта покупки',
+            textInfo: {
+              textType: 'INFO',
+              text: 'Введите покупаемую валюту'
+            }
+          },
+          widget: {
+            widgetType: FlowWidgetTypes.List,
+            widgetBody: {
+              text: ['RUB',
+                'EUR',
+                'USD'
+              ],
+              subText: [
+                'Рубли',
+                'Евро',
+                'Доллары'
+              ]
+            }
           }
         }
-      }
-    }).pipe(
+      };
+    } else if (data.step === 2) {
+      step = {
+        flowName: 'createCurrencyFlow',
+        status: FlowNameStatuses.End,
+        errorMessage: null,
+        data: {
+          section: {
+            title: '3 шаг: Введите количество валюты',
+            textInfo: {
+              textType: 'INFO',
+              text: 'Сколько валюты вы хотите купить'
+            }
+          },
+          widget: {
+            widgetType: FlowWidgetTypes.FloatNumber,
+            widgetBody: {
+              min: 1.0,
+              max: 5000.0,
+              text: 'Введите сумму от 1 до 5000',
+              hint: 'Введите сумму',
+              error: 'Вы должны ввести сумму от 1 до 5000'
+            }
+          }
+        }
+      };
+    }
+
+    return this.appService.isMockData ? of(step).pipe(
       tap((flow: any) => {
         this.steps$.next(this.steps$.getValue().concat([
           {
             title: flow.data.section.title,
-            order: data.step
+            order: data.step,
+            value: data.value
           }
         ]));
       })) : this.http.post('http://localhost:8080/flow/stepFlow', data).pipe(
@@ -158,7 +194,8 @@ export class FlowService {
         this.steps$.next(this.steps$.getValue().concat([
           {
             title: flow.data.section.title,
-            order: data.step
+            order: data.step,
+            value: data.value
           }
         ]));
       })
@@ -171,7 +208,7 @@ export class FlowService {
   }) {
     return this.appService.isMockData ? of({
       flowName: "flow",
-      status: "ORDER",
+      status: FlowNameStatuses.Order,
       errorMessage: null,
       data: {
         section: {
@@ -183,15 +220,6 @@ export class FlowService {
         },
         widget: null
       }
-    }) : this.http.post('http://localhost:8080/flow/createOrder', data).pipe(
-      tap((flow: any) => {
-        this.steps$.next(this.steps$.getValue().concat([
-          {
-            title: flow.data.section.title,
-            order: this.steps$.getValue().length - 1
-          }
-        ]));
-      })
-    );
+    }) : this.http.post('http://localhost:8080/flow/createOrder', data);
   }
 }

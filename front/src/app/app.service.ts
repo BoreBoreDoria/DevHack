@@ -78,9 +78,7 @@ export class AppService {
 
   fetchFlows() {
 
-    return this.isMockData ?
-      of([FlowNameTypes.CreateCurrency, FlowNameTypes.CreateSwift, FlowNameTypes.CreateNsj])
-      : this.http.post(``, {});
+    return of([FlowNameTypes.CreateCurrency]);
   }
 
   fetchClientInfo(id) {
