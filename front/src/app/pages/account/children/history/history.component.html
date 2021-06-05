@@ -1,0 +1,12 @@
+<ng-container *init="{ history: history$ | async } as params">
+  <div class="history">
+    <app-history-card
+      *ngFor="let historyEvent of params.history"
+      [date]="historyEvent.date"
+      [state]="historyEvent.state"
+      [title]="historyEvent.title"
+      [value]="historyEvent.value"
+      [type]="historyEvent.type"
+    ></app-history-card>
+  </div>
+</ng-container>

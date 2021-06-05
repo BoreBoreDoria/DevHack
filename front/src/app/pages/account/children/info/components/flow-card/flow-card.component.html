@@ -1,11 +1,14 @@
-<div class="flow-card">
+<div
+  class="flow-card card-s card-s--hover"
+  (click)="cardClick.emit()"
+>
   <label class="flow-card_subtitle">
     Operation
   </label>
   <h2 class="flow-card_title">
-    Actual flow name
+    {{ title }}
   </h2>
-  <div class="flow-card_icon">
-    <i nz-icon nzType="bank" nzTheme="outline"></i>
+  <div class="flow-card_icon" [ngSwitch]="type">
+    <i nz-icon nzType="dollar" nzTheme="outline" *ngSwitchCase="flowNameTypes.CreateCurrency"></i>
   </div>
 </div>

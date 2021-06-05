@@ -1,21 +1,21 @@
 <div class="account">
   <div class="account_wrapper">
+    <div class="account__logout">
+      <div class="account__logout_icon">
+        <i nz-icon nzType="export" nzTheme="outline"></i>
+      </div>
+    </div>
+
+    <div class="account__tabs vr-6__mb">
+      <a *ngFor="let tab of tabs" class="account__tabs_tab"
+         [routerLink]="tab.link"
+         [routerLinkActive]="'account__tabs_tab--active'"
+         [routerLinkActiveOptions]="{ exact: false }"
+      >
+        <h3>{{ tab.text }}</h3>
+      </a>
+    </div>
+
     <router-outlet></router-outlet>
   </div>
-<!--  <div class="account__info">-->
-<!--    <div class="account__info__radio-group">-->
-<!--      <nz-radio-group [(ngModel)]="radioValue" nzButtonStyle="solid">-->
-<!--        <label class="account__info__radio-group_button" nz-radio-button nzValue="A">Hangzhou</label>-->
-<!--        <label class="account__info__radio-group_button" nz-radio-button nzValue="B">Chengdu</label>-->
-<!--      </nz-radio-group>-->
-<!--    </div>-->
-
-<!--    <ng-container *ngIf="radioValue === 'A'">-->
-<!--      A Content-->
-<!--    </ng-container>-->
-
-<!--    <ng-container *ngIf="radioValue === 'B'">-->
-<!--      B Content-->
-<!--    </ng-container>-->
-<!--  </div>-->
 </div>

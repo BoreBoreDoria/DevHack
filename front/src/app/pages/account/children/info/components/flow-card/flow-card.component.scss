@@ -1,20 +1,47 @@
 @import "src/assets/styles/vars.scss";
 
+@keyframes svgClickAnimation {
+  0% {
+    fill: $main-color;
+  }
+  100% {
+    fill: $black;
+  }
+}
+
+@keyframes titleClickAnimation {
+  0% {
+    color: $main-color;
+  }
+  100% {
+    color: $black;
+  }
+}
+
 .flow-card {
   position: relative;
   height: 164px;
 
   padding: 24px;
 
-  border-radius: 25px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  transition: 0.2s;
+
+  &--clicked {
+    ::ng-deep svg {
+      animation: svgClickAnimation 0.2s;
+    }
+
+    h2 {
+      animation: titleClickAnimation 0.2s;
+    }
+  }
 
   &_subtitle {
     color: $black-60;
   }
 
   &_title {
-    //
+    color: $black;
   }
 
   &_icon {

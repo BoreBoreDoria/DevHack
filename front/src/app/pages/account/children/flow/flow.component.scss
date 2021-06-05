@@ -1,0 +1,72 @@
+@import "src/assets/styles/vars.scss";
+
+.flow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 60%;
+
+  padding: 32px;
+
+  &--top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &_back-btn {
+    position: absolute;
+
+    top: 32px;
+    left: 32px;
+
+    cursor: pointer;
+
+    ::ng-deep svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    &:hover {
+      ::ng-deep svg {
+        fill: $main-color;
+      }
+    }
+  }
+
+  &_header {
+    margin-bottom: 0;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 60%;
+  }
+
+  &_dropdown {
+    width: 100%;
+  }
+
+  &__slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+
+    &_line {
+      width: 100%;
+    }
+
+    &_input {
+      width: 20%;
+    }
+  }
+
+
+}
