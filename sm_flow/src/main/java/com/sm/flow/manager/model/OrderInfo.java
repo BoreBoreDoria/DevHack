@@ -1,6 +1,7 @@
 package com.sm.flow.manager.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -8,10 +9,11 @@ import java.util.List;
  * Информация о заказе
  */
 @Data
+@ToString
 public class OrderInfo {
 
     /**
-     *  Название операции
+     * Название операции
      */
     String flowName;
 
