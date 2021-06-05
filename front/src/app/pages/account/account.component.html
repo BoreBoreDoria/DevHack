@@ -1,0 +1,68 @@
+<div class="account">
+  <form nz-form
+        *ngIf="!isLogged"
+        [formGroup]="loginForm"
+        class="account__login-form"
+        (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your username!">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="userName" placeholder="Username" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your Password!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" placeholder="Password" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="vr-2__mb">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="remember">
+          <span>Remember me</span>
+        </label>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <a class="account__login-form_forgot">Forgot password</a>
+      </div>
+      <button nz-button class="account__login-form_button vr-2__mt"
+              [nzType]="'primary'"
+              [nzSize]="'large'"
+              nzShape="round">
+        Log in
+      </button>
+    </div>
+  </form>
+
+  <div class="account__info">
+    <nz-radio-group [(ngModel)]="radioValue" nzButtonStyle="solid">
+<!--      <label nz-radio-button nzValue="A">Hangzhou</label>-->
+<!--      <label nz-radio-button nzValue="B">Chengdu</label>-->
+
+      <button nz-button class="account__login-form_button vr-2__mt"
+              [nzType]="'primary'"
+              [nzSize]="'large'"
+              nz-radio-button nzValue="A"
+              nzShape="round">
+        Log in
+      </button>
+      <button nz-button class="account__login-form_button vr-2__mt"
+              [nzType]="'primary'"
+              [nzSize]="'large'"
+              nz-radio-button nzValue="B"
+              nzShape="round">
+        Log in
+      </button>
+    </nz-radio-group>
+
+    <ng-container *ngIf="radioValue === 'A'">
+      A Content
+    </ng-container>
+
+    <ng-container *ngIf="radioValue === 'B'">
+      B Content
+    </ng-container>
+  </div>
+</div>

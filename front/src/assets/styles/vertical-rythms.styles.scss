@@ -1,0 +1,143 @@
+.vr-1 {
+  background-color: rgba(115, 151, 171, 0.5);
+  &__pt {
+    padding-top: 8px !important;
+  }
+  &__pb {
+    padding-bottom: 8px !important;
+  }
+  &__mt {
+    margin-top: 8px !important;
+  }
+  &__mb {
+    margin-bottom: 8px !important;
+  }
+}
+
+.vr-2 {
+  background-color: rgba(0, 255, 179, 0.5);
+  &__pt {
+    padding-top: 16px !important;
+  }
+  &__pb {
+    padding-bottom: 16px !important;
+  }
+  &__mt {
+    margin-top: 16px !important;
+  }
+  &__mb {
+    margin-bottom: 16px !important;
+  }
+}
+//32->24
+.vr-3 {
+  background-color: rgba(255, 0, 46, 0.2);
+  &__pt {
+    padding-top: 24px !important;
+  }
+  &__pb {
+    padding-bottom: 24px !important;
+  }
+  &__mt {
+    margin-top: 24px !important;
+  }
+  &__mb {
+    margin-bottom: 24px !important;
+  }
+}
+//48->32
+.vr-4 {
+  background-color: rgba(0, 133, 255, 0.2);
+  &__pt {
+    padding-top: 32px !important;
+  }
+  &__pb {
+    padding-bottom: 32px !important;
+  }
+  &__mt {
+    margin-top: 32px !important;
+  }
+  &__mb {
+    margin-bottom: 32px !important;
+  }
+}
+//64->48
+.vr-5 {
+  background-color: rgba(132, 236, 0, 0.8);
+  &__pt {
+    padding-top: 48px !important;
+  }
+  &__pb {
+    padding-bottom: 48px !important;
+  }
+  &__mt {
+    margin-top: 48px !important;
+  }
+  &__mb {
+    margin-bottom: 48px !important;
+  }
+}
+//80->64
+.vr-6 {
+  background-color: rgba(255, 138, 0, 0.2);
+  &__pt {
+    padding-top: 64px !important;
+  }
+  &__pb {
+    padding-bottom: 64px !important;
+  }
+  &__mt {
+    margin-top: 64px !important;
+  }
+  &__mb {
+    margin-bottom: 64px !important;
+  }
+}
+//96->80
+.vr-7 {
+  background-color: rgba(204, 0, 255, 0.2);
+  &__pt {
+    padding-top: 80px !important;
+  }
+  &__pb {
+    padding-bottom: 80px !important;
+  }
+  &__mt {
+    margin-top: 80px !important;
+  }
+  &__mb {
+    margin-bottom: 80px !important;
+  }
+}
+
+.vr-8 {
+  background-color: rgba(204, 0, 255, 1);
+  &__pt {
+    padding-top: 96px !important;
+  }
+  &__pb {
+    padding-bottom: 96px !important;
+  }
+  &__mt {
+    margin-top: 96px !important;
+  }
+  &__mb {
+    margin-bottom: 96px !important;
+  }
+}
+
+.vr-9 {
+  background-color: rgba(235, 255, 0, 1);
+  &__pt {
+    padding-top: 112px !important;
+  }
+  &__pb {
+    padding-bottom: 112px !important;
+  }
+  &__mt {
+    margin-top: 112px !important;
+  }
+  &__mb {
+    margin-bottom: 112px !important;
+  }
+}
