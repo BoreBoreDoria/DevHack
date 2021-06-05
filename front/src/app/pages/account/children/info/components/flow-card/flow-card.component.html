@@ -6,7 +6,7 @@
     Operation
   </label>
   <h2 class="flow-card_title">
-    {{ title }}
+    {{ type | call : getTitleByType }}
   </h2>
   <div class="flow-card_icon" [ngSwitch]="type">
     <i nz-icon nzType="dollar" nzTheme="outline" *ngSwitchCase="flowNameTypes.CreateCurrency"></i>

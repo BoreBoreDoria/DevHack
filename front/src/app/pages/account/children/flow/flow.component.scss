@@ -38,7 +38,11 @@
   }
 
   &_header {
+    width: 100%;
+
     margin-bottom: 0;
+
+    text-align: center;
   }
 
   &__body {
@@ -68,5 +72,22 @@
     }
   }
 
+  &__order {
+    display: flex;
+    flex-direction: column;
 
+    &__step {
+      display: flex;
+      flex-direction: row;
+
+      &_title {
+        margin-bottom: 0;
+      }
+
+      &_value {
+        margin-bottom: 0;
+        margin-left: 8px;
+      }
+    }
+  }
 }

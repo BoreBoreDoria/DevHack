@@ -13,7 +13,7 @@
     <h1 class="flow_header">
       {{ params.flow?.data.section.textInfo.text }}
     </h1>
-    <nz-steps [nzCurrent]="params.steps.length - 1"
+    <nz-steps *ngIf="params.flow.status !== flowNameStatuses.Order" [nzCurrent]="params.steps.length - 1"
               nzStatus="{{params.flow?.errorMessage ? 'error' : 'process'}}"
               class="vr-3__mt">
       <nz-step *ngFor="let step of params.steps"
@@ -27,61 +27,65 @@
 <!--    <h3 class="flow_description vr-2__mt">-->
 <!--      {{ params.flow.data.section.title }}-->
 <!--    </h3>-->
-    <ng-container [ngSwitch]="params.flow.data.widget.widgetType">
-      <ng-container *ngSwitchCase="flowWidgetTypes.List">
-        <button nz-dropdown nz-button nzTrigger="click"
-                [nzDropdownMenu]="menu"
-                [nzPlacement]="'bottomCenter'"
-                [nzSize]="'large'"
-                class="flow_dropdown"
-        >
-          {{ params.selectedDropdownValue || 'Currency' }}
-        </button>
-        <nz-dropdown-menu
-          #menu="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item *ngFor="let option of params.flow.data.widget.widgetBody.text"
-                (click)="selectedCurrency$.next(option)"
-            >
-              {{ option }}
-            </li>
-          </ul>
-        </nz-dropdown-menu>
-      </ng-container>
-      <ng-container *ngSwitchCase="flowWidgetTypes.FloatNumber">
-        <h3>{{params.flow.data.widget.widgetBody.text}}</h3>
-        <div class="flow__slider">
-          <nz-slider
-            class="flow__slider_line"
-            [nzMin]="params.flow.data.widget.widgetBody.min"
-                     [nzMax]="params.flow.data.widget.widgetBody.max"
-                     [(ngModel)]="sliderValue"></nz-slider>
-          <nz-input-number class="flow__slider_input"
-                           [nzMin]="params.flow.data.widget.widgetBody.min"
-                           [nzMax]="params.flow.data.widget.widgetBody.max"
-                           [(ngModel)]="sliderValue"
-          ></nz-input-number>
-        </div>
+    <ng-container *ngIf="params.flow.status !== flowNameStatuses.Order">
+      <ng-container [ngSwitch]="params.flow.data.widget?.widgetType">
+        <ng-container *ngSwitchCase="flowWidgetTypes.List">
+          <button nz-dropdown nz-button nzTrigger="click"
+                  [nzDropdownMenu]="menu"
+                  [nzPlacement]="'bottomCenter'"
+                  [nzSize]="'large'"
+                  class="flow_dropdown"
+          >
+            {{ params.selectedDropdownValue || 'Currency' }}
+          </button>
+          <nz-dropdown-menu
+            #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item *ngFor="let option of params.flow.data.widget?.widgetBody.text"
+                  (click)="selectedCurrency$.next(option)"
+              >
+                {{ option }}
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </ng-container>
+        <ng-container *ngSwitchCase="flowWidgetTypes.FloatNumber">
+          <h3>{{params.flow.data.widget.widgetBody.text}}</h3>
+          <div class="flow__slider">
+            <nz-slider
+              class="flow__slider_line"
+              [nzMin]="params.flow.data.widget.widgetBody.min"
+              [nzMax]="params.flow.data.widget.widgetBody.max"
+              [(ngModel)]="sliderValue"></nz-slider>
+            <nz-input-number class="flow__slider_input"
+                             [nzMin]="params.flow.data.widget.widgetBody.min"
+                             [nzMax]="params.flow.data.widget.widgetBody.max"
+                             [(ngModel)]="sliderValue"
+            ></nz-input-number>
+          </div>
 
 
+        </ng-container>
       </ng-container>
     </ng-container>
 
-
+    <ng-container *ngIf="params.flow.status === flowNameStatuses.Order">
+      <div class="flow__order">
+        <div *ngFor="let step of params.steps | call: filterSteps" class="flow__order__step">
+          <label class="flow__order__step_title">{{ step.title }}:</label>
+          <h4 class="flow__order__step_value">{{ step.value }}</h4>
+        </div>
+      </div>
+    </ng-container>
   </div>
 
   <button nz-button class="login-form_button vr-2__mt"
-          *init="{
-          value: params.flow.data.widget.widgetType | call : getValueByType :
-          sliderValue :
-          params.selectedDropdownValue
-          } as stepParams"
           [nzType]="'primary'"
           [nzSize]="'large'"
-          [disabled]="params.flow.data.widget.widgetType === flowWidgetTypes.List ?
+          [disabled]="params.flow?.data.widget?.widgetType === flowWidgetTypes.List ?
           !params.selectedDropdownValue : !sliderValue"
-          (click)="nextStepHandler(params.flow, params.steps.length + 1,
-          stepParams.value
+          (click)="nextStepHandler(params.flow, params.steps?.length,
+          params.flow?.data.widget?.widgetType === flowWidgetTypes.FloatNumber ? sliderValue : params.selectedDropdownValue
           , params.flow.status)"
           nzShape="round">
     Далее
