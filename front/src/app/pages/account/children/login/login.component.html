@@ -1,0 +1,38 @@
+<div class="login-form">
+  <form nz-form
+        [formGroup]="loginForm"
+        class="login-form_wrapper"
+        (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your username!">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="userName" placeholder="Username" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your Password!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" placeholder="Password" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="vr-2__mb">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="remember">
+          <span>Remember me</span>
+        </label>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <a class="login-form_forgot">Forgot password</a>
+      </div>
+      <button nz-button class="login-form_button vr-2__mt"
+              [nzType]="'primary'"
+              [nzSize]="'large'"
+              [routerLink]="['']"
+              nzShape="round">
+        Log in
+      </button>
+    </div>
+  </form>
+</div>
