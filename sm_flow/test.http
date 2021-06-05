@@ -1,0 +1,44 @@
+GET http://localhost:8080/client/3
+
+###
+GET http://localhost:8080/flow/startFlow
+Content-Type: application/json; charset=utf-8
+
+{
+  "flowName": "createCurrencyFlow",
+  "clientId": 3
+}
+
+###
+GET http://localhost:8080/flow/stepFlow
+Content-Type: application/json; charset=utf-8
+
+{
+  "flowName": "createCurrencyFlow",
+  "step": 3,
+  "value": null
+}
+
+###
+GET http://localhost:8080/flow/createOrder
+Content-Type: application/json; charset=utf-8
+
+{
+  "flowName": "flow",
+  "valueList": [
+    {
+      "paramName": "cur1",
+      "value": "RUB"
+    },
+    {
+      "paramName": "cur2",
+      "value": "EUR"
+    },
+    {
+      "paramName": "sum",
+      "value": "35"
+    }
+  ]
+}
+
+
