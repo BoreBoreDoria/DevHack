@@ -1,4 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "assets/styles/vertical-rythms.styles.scss";
+@import "assets/styles/vars.scss";
 
+.card-s {
+  border-radius: 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
+  cursor: pointer;
+
+  &--hover {
+    &:hover {
+      box-shadow: rgba(65, 108, 142, 0.25) 0 13px 27px -5px, $main-color-30 0px 8px 16px -8px;
+      transition: 0.3s;
+    }
+  }
+}

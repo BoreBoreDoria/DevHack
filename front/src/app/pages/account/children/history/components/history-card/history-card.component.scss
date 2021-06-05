@@ -1,0 +1,76 @@
+@import "src/assets/styles/vars.scss";
+
+.history-card {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 96px;
+
+  padding: 16px;
+
+  &--left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &--right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-right: 16px;
+
+    &_date {
+      margin-bottom: 8px;
+
+      color: $black-60;
+    }
+
+    &_state {
+      ::ng-deep svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      &--success {
+        ::ng-deep svg {
+          fill: limegreen;
+        }
+      }
+
+      &--pending {
+        ::ng-deep svg {
+          fill: #f3d831;
+        }
+      }
+
+      &--reject {
+        ::ng-deep svg {
+          fill: #d21d1d;
+        }
+      }
+    }
+  }
+
+  &_title {
+    margin-bottom: 0;
+  }
+
+  &_value {
+    margin-bottom: 0;
+  }
+
+  &_repeat-button {
+    margin-left: 16px;
+  }
+}

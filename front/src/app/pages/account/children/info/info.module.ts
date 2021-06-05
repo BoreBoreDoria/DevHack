@@ -5,6 +5,8 @@ import {InfoComponent} from "./info.component";
 import {NzAvatarModule} from "ng-zorro-antd/avatar";
 import { FlowCardComponent } from './components/flow-card/flow-card.component';
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {NgxfModule} from "@ngxf/platform";
 
 
 
@@ -14,7 +16,9 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     CommonModule,
     InfoRoutingModule,
     NzAvatarModule,
-    NzIconModule
+    NzIconModule,
+    NzButtonModule,
+    NgxfModule
   ]
 })
 export class InfoModule { }

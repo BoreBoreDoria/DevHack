@@ -28,7 +28,12 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./children/login/login.module').then((m) => m.LoginModule),
-  }
+  },
+  {
+    path: ':flowId',
+    loadChildren: () =>
+      import('./children/flow/flow.module').then((m) => m.FlowModule),
+  },
 ];
 
 @NgModule({
