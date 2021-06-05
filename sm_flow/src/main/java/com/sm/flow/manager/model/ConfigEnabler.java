@@ -6,6 +6,9 @@ import lombok.Value;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сущность для динамической конфигурации по ролям. Создаеётся через билдер
+ */
 @Value
 @Builder(toBuilder = true)
 public class ConfigEnabler {
@@ -14,6 +17,10 @@ public class ConfigEnabler {
     ConfigEntity createSwift;
     ConfigEntity createNsj;
 
+    /**
+     * Возвращает сконфигурированый лист
+     * @return лист конфигов
+     */
     public List<ConfigEntity> getConfig(){
         List<ConfigEntity> list = new ArrayList<>();
         list.add(createCurrency);

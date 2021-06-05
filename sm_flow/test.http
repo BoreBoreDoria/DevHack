@@ -1,7 +1,7 @@
 GET http://localhost:8080/client/3
 
 ###
-GET http://localhost:8080/flow/startFlow
+POST http://localhost:8080/flow/startFlow
 Content-Type: application/json; charset=utf-8
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json; charset=utf-8
 }
 
 ###
-GET http://localhost:8080/flow/stepFlow
+POST http://localhost:8080/flow/stepFlow
 Content-Type: application/json; charset=utf-8
 
 {
@@ -20,7 +20,7 @@ Content-Type: application/json; charset=utf-8
 }
 
 ###
-GET http://localhost:8080/flow/createOrder
+POST http://localhost:8080/flow/createOrder
 Content-Type: application/json; charset=utf-8
 
 {

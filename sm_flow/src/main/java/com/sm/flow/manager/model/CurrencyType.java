@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Список валют
+ */
 public enum CurrencyType {
     RUB("Рубли"),
     EUR("Евро"),

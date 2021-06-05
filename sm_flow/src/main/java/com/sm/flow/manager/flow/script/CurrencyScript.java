@@ -77,7 +77,7 @@ public class CurrencyScript {
         return FlowEntity.builder()
                 .flowName(FlowType.CREATE_CURRENCY.getName())
                 .data(infoData)
-                .status(StatusType.SUCCESS)
+                .status(StatusType.END)
                 .build();
     }
 
@@ -96,7 +96,7 @@ public class CurrencyScript {
         return FlowEntity.builder()
                 .flowName(FlowType.CREATE_CURRENCY.getName())
                 .data(infoData)
-                .status(StatusType.END)
+                .status(StatusType.SUCCESS)
                 .build();
     }
 

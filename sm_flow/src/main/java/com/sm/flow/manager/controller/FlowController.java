@@ -16,17 +16,17 @@ public class FlowController {
 
     private final FlowService flowService;
 
-    @GetMapping(value = "/startFlow")
+    @PostMapping(value = "/startFlow")
     public FlowEntity startFlow(@RequestBody StartFlow flow) {
         return flowService.startFlow(flow.getFlowName(), flow.getClientId());
     }
 
-    @GetMapping(value = "/stepFlow")
+    @PostMapping(value = "/stepFlow")
     public FlowEntity stepFlow(@RequestBody StepFlow flow) {
         return flowService.stepFlow(flow);
     }
 
-    @GetMapping(value = "/createOrder")
+    @PostMapping(value = "/createOrder")
     public FlowEntity createOrder(@RequestBody OrderInfo orderInfo) {
         return flowService.createOrder(orderInfo);
     }

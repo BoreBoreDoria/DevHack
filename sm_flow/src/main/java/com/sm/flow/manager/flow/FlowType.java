@@ -1,5 +1,8 @@
 package com.sm.flow.manager.flow;
 
+/**
+ * Список сценариев
+ */
 public enum FlowType {
     CREATE_CURRENCY("createCurrencyFlow"),
     GET_HISTORY("getHistory"),
