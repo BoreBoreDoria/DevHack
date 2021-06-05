@@ -8,9 +8,18 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AccountComponent implements OnInit {
 
-  radioValue = 'A';
+  activeTab = 'History';
 
-  isLogged = true;
+  tabs = [
+    {
+      link: 'info',
+      text: 'Info'
+    },
+    {
+      link: 'history',
+      text: 'History'
+    }
+  ];
 
   ngOnInit(): void {
   }

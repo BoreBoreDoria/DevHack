@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FlowCardComponent } from './flow-card.component';
+import { HistoryCardComponent } from './history-card.component';
 
-describe('FlowCardComponent', () => {
-  let component: FlowCardComponent;
-  let fixture: ComponentFixture<FlowCardComponent>;
+describe('HistoryCardComponent', () => {
+  let component: HistoryCardComponent;
+  let fixture: ComponentFixture<HistoryCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FlowCardComponent ]
+      declarations: [ HistoryCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FlowCardComponent);
+    fixture = TestBed.createComponent(HistoryCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,22 +1,118 @@
+@import "src/assets/styles/vars.scss";
+
+::ng-deep app-info {
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep app-history {
+  width: 100%;
+  height: 100%;
+}
 
 .account {
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
 
   &_wrapper {
-    width: 60%;
-    height: 80%;
-
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 
-    box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    height: 100%;
 
-    border-radius: 50px;
+    padding: 32px;
+  }
+
+  &__logout {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+
+    cursor: pointer;
+
+    ::ng-deep svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    &:hover {
+      ::ng-deep svg {
+        fill: $main-color;
+        transition: 0.3s;
+      }
+    }
+  }
+
+  &__tabs {
+    display: flex;
+    flex-direction: row;
+    padding: 3px;
+
+    background-color: $black-20;
+
+    border-radius: 100px;
+
+    text-align: center;
+
+    &_tab {
+      position: relative;
+      width: 128px;
+      margin-bottom: 0;
+      padding: 8px 24px;
+      z-index: 1;
+
+      border-radius: 100px;
+
+      cursor: pointer;
+
+      h3 {
+        margin-bottom: 0;
+      }
+
+      &--active {
+        //background-color: white;
+
+        &:first-child {
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            //left: 0;
+            right: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+
+            border-radius: 100px;
+
+            background-color: white;
+
+            animation: rightToLeft 0.2s ease-in;
+          }
+        }
+
+        &:last-child {
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            //right: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+
+            border-radius: 100px;
+
+            background-color: white;
+
+            animation: leftToRight 0.3s ease;
+          }
+        }
+      }
+    }
   }
 
   &__info {

@@ -1,60 +1,37 @@
 @import "src/assets/styles/vars.scss";
 
+@keyframes rightToLeft {
+  0% {
+    right: -72px;
+  }
+  100% {
+    right: 0;
+  }
+}
+
+@keyframes leftToRight {
+  0% {
+    left: -72px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
 .info {
   position: relative;
-
-  height: 80vh;
-  width: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
-  padding: 32px;
-
-  &__logout {
-    position: absolute;
-    top: 32px;
-    right: 32px;
-
-    cursor: pointer;
-
-    ::ng-deep svg {
-      width: 32px;
-      height: 32px;
-    }
-  }
-
-  &__tabs {
-    display: flex;
-    flex-direction: row;
-    padding: 3px;
-
-    background-color: $black-20;
-
-    border-radius: 100px;
-
-    text-align: center;
-
-    &_tab {
-      width: 128px;
-      margin-bottom: 0;
-      padding: 8px 24px;
-
-      border-radius: 100px;
-
-      cursor: pointer;
-
-      &--active {
-        background-color: white;
-      }
-    }
-  }
+  height: 100%;
+  width: 100%;
 
   &__user {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 
   &__name {

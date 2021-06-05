@@ -1,0 +1,35 @@
+<div class="history-card card-s">
+  <div class="history-card--left">
+    <div class="history-card__status">
+      <p class="history-card__status_date">{{date}}</p>
+      <div class="history-card__status_state history-card__status_state--{{state}}"
+           [ngSwitch]="state">
+        <ng-container *ngSwitchCase="historyEventStatuses.Success">
+          <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+        </ng-container>
+        <ng-container *ngSwitchCase="historyEventStatuses.Pending">
+          <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
+        </ng-container
+        ><ng-container *ngSwitchCase="historyEventStatuses.Reject">
+          <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+        </ng-container>
+      </div>
+    </div>
+    <h1 class="history-card_title">{{ title }}</h1>
+  </div>
+
+  <div class="history-card--right">
+    <h2 class="history-card_value">
+      {{value}}
+    </h2>
+    <button nz-button class="history-card_repeat-button"
+            [nzType]="'default'"
+            [nzSize]="'large'"
+            nzShape="circle"
+            (click)="repeatClick.emit()"
+    >
+      <i nz-icon nzType="redo" nzTheme="outline"></i>
+    </button>
+  </div>
+
+</div>
