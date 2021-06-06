@@ -12,6 +12,8 @@ import java.util.List;
 @ToString
 public class OrderInfo {
 
+    String clientId;
+
     /**
      * Название операции
      */
