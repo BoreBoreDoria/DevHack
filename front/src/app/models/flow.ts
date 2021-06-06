@@ -6,7 +6,9 @@ export enum FlowNameTypes {
 
 export enum FlowNameStatuses {
   Init = 'INIT',
-  Success = 'SUCCESS'
+  Success = 'SUCCESS',
+  End = 'END',
+  Order = 'ORDER'
 }
 
 export enum FlowTextTypes {
@@ -15,7 +17,7 @@ export enum FlowTextTypes {
 
 export enum FlowWidgetTypes {
   List = 'LIST',
-  FloatNumber = 'FloatNumber'
+  FloatNumber = 'FLOAT_NUMBER'
 }
 
 export interface Flow {

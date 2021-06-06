@@ -27,9 +27,8 @@
 
   <div class="info__flows">
     <app-flow-card class="info__flows_card" *ngFor="let flow of params.flows"
-                   [type]="flow.flowName"
-                   [title]="flow.data.section.textInfo.text"
-                   (cardClick)="goToFlow(flow.flowName)"
+                   [type]="flow"
+                   (cardClick)="goToFlow(flow)"
     ></app-flow-card>
   </div>
 </div>
