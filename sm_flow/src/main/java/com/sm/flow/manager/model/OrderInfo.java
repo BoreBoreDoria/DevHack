@@ -20,6 +20,11 @@ public class OrderInfo {
     String flowName;
 
     /**
+     * Идентификатор клиента
+     */
+    String clientId;
+
+    /**
      * Список параметров
      */
     List<OrderValue> valueList;

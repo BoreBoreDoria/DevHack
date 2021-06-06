@@ -25,6 +25,7 @@ Content-Type: application/json; charset=utf-8
 
 {
   "flowName": "flow",
+  "clientId": "4",
   "valueList": [
     {
       "paramName": "cur1",

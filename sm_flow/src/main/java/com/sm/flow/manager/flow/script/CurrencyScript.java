@@ -45,9 +45,9 @@ public class CurrencyScript {
     }
 
     public FlowEntity stepFlow(Long step, String value) {
-        if (step == 2L) {
+        if (step == 1L) {
             return currencyTo();
-        } else if (step == 3L) {
+        } else if (step == 2L) {
             return sumStep();
         }
         return null;
