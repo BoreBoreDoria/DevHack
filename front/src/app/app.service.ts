@@ -12,7 +12,7 @@ import {FlowNameStatuses, FlowNameTypes, FlowTextTypes, FlowWidgetTypes} from ".
 })
 export class AppService {
 
-  isMockData = true;
+  isMockData = false;
 
   get history$() {
     return this.appQuery.history$;
